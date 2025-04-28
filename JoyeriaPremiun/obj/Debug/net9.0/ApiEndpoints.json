@@ -115,6 +115,22 @@
   },
   {
     "ContainingType": "JoyeriaPremiun.Controllers.ProductoController",
+    "Method": "Delete",
+    "RelativePath": "api/producto/{descuentoId}/descuento",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "descuentoId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JoyeriaPremiun.Controllers.ProductoController",
     "Method": "Put",
     "RelativePath": "api/producto/{productoId}",
     "HttpMethod": "PUT",

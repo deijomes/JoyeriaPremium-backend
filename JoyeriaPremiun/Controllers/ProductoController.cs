@@ -146,6 +146,34 @@ namespace JoyeriaPremiun.Controllers
             return Ok(new { message = "Descuento actualizado correctamente" });
         }
 
+        [HttpDelete("{descuentoId:int}/descuento")]
+        public async Task<ActionResult> Delete([FromRoute] int descuentoId)
+        {
+            
+            var descuentoProducto = await context.ProductoDescuentos.FirstOrDefaultAsync(x => x.id == descuentoId);
+
+            if (descuentoProducto == null)
+            {
+                return NotFound(new { error = "Descuento no encontrado", descuentoId });
+            }
+
+            var producto = await context.Productos.FirstOrDefaultAsync(x => x.Id == descuentoProducto.ProductoId);
+
+            if (producto == null)
+            {
+                return NotFound(new { error = "Producto no encontrado", productoId = descuentoProducto.ProductoId });
+            }
+
+            context.ProductoDescuentos.Remove(descuentoProducto);
+
+            producto.descuento = 0;
+            context.Productos.Update(producto);
+
+            await context.SaveChangesAsync();
+
+            return Ok();
+        }
+
 
     }
 }
