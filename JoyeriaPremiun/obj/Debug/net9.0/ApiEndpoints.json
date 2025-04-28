@@ -95,6 +95,27 @@
   {
     "ContainingType": "JoyeriaPremiun.Controllers.ProductoController",
     "Method": "Put",
+    "RelativePath": "api/producto/{descuentoId}/descuento",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "descuentoId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "descuentoCreacionDTO",
+        "Type": "JoyeriaPremiun.DTOS.productoDescuentoCreacionDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JoyeriaPremiun.Controllers.ProductoController",
+    "Method": "Put",
     "RelativePath": "api/producto/{productoId}",
     "HttpMethod": "PUT",
     "IsController": true,
@@ -122,6 +143,27 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "JoyeriaPremiun.Controllers.ProductoController",
+    "Method": "post",
+    "RelativePath": "api/producto/{productoId}/descuento",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "productoId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "descuentoCreacionDTO",
+        "Type": "JoyeriaPremiun.DTOS.productoDescuentoCreacionDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "JoyeriaPremiun.Controllers.ProductoController",

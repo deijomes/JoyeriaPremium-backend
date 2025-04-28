@@ -34,24 +34,7 @@ namespace JoyeriaPremiun.Controllers
             return productoDto;
         }
        
-         /*
-         [HttpGet("{id}")]
-         public async Task<ActionResult<ProductoDTO>> getProducto (Guid id)
-         {
-             var producto = await context.Productos.Include(X => X.imagenProductos)
-                 .FirstOrDefaultAsync(x=> x.Id == id);
-
-             if (producto is null)
-             {
-                 return NotFound();
-             }
-
-             var  productoDTO = mapper.Map<ProductoDTO>(producto);
-
-
-             return productoDTO;
-         }
-         */
+        
 
          [HttpPut("{productoId:int}")]
          public async Task<ActionResult<string>> Put([FromRoute] int productoId , [FromBody] productoCreacionDTO productoCreacionDTO)
@@ -97,23 +80,72 @@ namespace JoyeriaPremiun.Controllers
              return Ok();
          }
 
-        /* [HttpPut("{id}")]
-         public async Task<ActionResult> Put([FromRoute] Guid id, [FromBody] ProductoCreacionDTO productoCreacionDTO)
-         {
-             var productoExiste = await context.Productos.FirstOrDefaultAsync(x => x.Id == id);
 
-             if (productoExiste is null)
-             {
-                 return NotFound();
-             }
+        [HttpPost("{productoId:int}/descuento")]
+        public async Task<ActionResult> post([FromRoute] int productoId, [FromBody] productoDescuentoCreacionDTO descuentoCreacionDTO)
+        {
+            var producto = await context.Productos.FindAsync(productoId);
+
+            if (producto == null)
+            {
+                return NotFound("product not found");
+            }
+
+            descuentoCreacionDTO.ProductoId = productoId;
+
+          
+            if (descuentoCreacionDTO.Descuento == null)
+            {
+                return BadRequest("El descuento es obligatorio");
+            }
+
+            producto.descuento = descuentoCreacionDTO.Descuento.Value;
 
 
-             mapper.Map(productoCreacionDTO, productoExiste);
-             await context.SaveChangesAsync();
+            var descuento = mapper.Map<ProductoDescuento>(descuentoCreacionDTO);
+            
 
-             return NoContent();
-         }
+            context.ProductoDescuentos.Add(descuento);
 
-         */
+            await context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+
+        [HttpPut("{descuentoId:int}/descuento")]
+        public async Task<ActionResult> Put([FromRoute] int descuentoId, [FromBody] productoDescuentoCreacionDTO descuentoCreacionDTO)
+        {
+            var descuentoProducto = await context.ProductoDescuentos.FirstOrDefaultAsync(x => x.id == descuentoId);
+
+            if (descuentoProducto == null)
+            {
+                return NotFound(new { error = "Descuento no encontrado", descuentoId });
+            }
+
+            var producto = await context.Productos.FirstOrDefaultAsync(x => x.Id == descuentoProducto.ProductoId);
+
+            if (producto == null)
+            {
+                return NotFound(new { error = "Producto no encontrado", productoId = descuentoProducto.ProductoId });
+            }
+
+            if (descuentoCreacionDTO.Descuento == null)
+            {
+                return BadRequest(new { error = "El descuento es obligatorio" });
+            }
+
+            producto.descuento = descuentoCreacionDTO.Descuento.Value;
+            descuentoProducto.Descuento = descuentoCreacionDTO.Descuento;
+
+            context.Productos.Update(producto);
+            context.ProductoDescuentos.Update(descuentoProducto);
+
+            await context.SaveChangesAsync();
+
+            return Ok(new { message = "Descuento actualizado correctamente" });
+        }
+
+
     }
 }

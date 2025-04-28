@@ -9,12 +9,16 @@ namespace JoyeriaPremiun.utilidades
     {
         public autoMapperProfiles()
         {
-            CreateMap<Producto, productoDTO>();
+            CreateMap<Producto, productoDTO>()
+             .ForMember(dest => dest.PrecioDeVenta, opt => opt.MapFrom(src => src.PrecioDeVenta));
+
             CreateMap<imagenCreacionDTO, ImagenProducto>();
             CreateMap<productoCreacionDTO, Producto>();
 
              CreateMap<ImagenProducto, imagenProductoDTO>()
             .ForMember(dest => dest.Producto, opt => opt.MapFrom(src => src.producto.Nombre));
+
+            CreateMap<productoDescuentoCreacionDTO, ProductoDescuento>();
 
             CreateMap<compraCreacionDTO, CompraProductoS>();
 
