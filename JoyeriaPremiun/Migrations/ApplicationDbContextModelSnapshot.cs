@@ -76,6 +76,29 @@ namespace JoyeriaPremiun.Migrations
                     b.ToTable("compraProductos");
                 });
 
+            modelBuilder.Entity("JoyeriaPremiun.Entidades.FavoritoProducto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ProductoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductoId");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("favoritos");
+                });
+
             modelBuilder.Entity("JoyeriaPremiun.Entidades.ImagenProducto", b =>
                 {
                     b.Property<int>("id")
@@ -158,9 +181,11 @@ namespace JoyeriaPremiun.Migrations
 
             modelBuilder.Entity("JoyeriaPremiun.Entidades.Usuario", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Correo")
                         .IsRequired()
@@ -182,7 +207,7 @@ namespace JoyeriaPremiun.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Usuarios");
+                    b.ToTable("UsuarioS");
                 });
 
             modelBuilder.Entity("JoyeriaPremiun.Entidades.CompraProductoS", b =>
@@ -200,6 +225,25 @@ namespace JoyeriaPremiun.Migrations
                     b.Navigation("Compra");
 
                     b.Navigation("Producto");
+                });
+
+            modelBuilder.Entity("JoyeriaPremiun.Entidades.FavoritoProducto", b =>
+                {
+                    b.HasOne("JoyeriaPremiun.Entidades.Producto", "Productos")
+                        .WithMany("Favoritos")
+                        .HasForeignKey("ProductoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JoyeriaPremiun.Entidades.Usuario", "Usuario")
+                        .WithMany("Favoritos")
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Productos");
+
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("JoyeriaPremiun.Entidades.ImagenProducto", b =>
@@ -233,9 +277,16 @@ namespace JoyeriaPremiun.Migrations
                 {
                     b.Navigation("CompraProductos");
 
+                    b.Navigation("Favoritos");
+
                     b.Navigation("imagenProductos");
 
                     b.Navigation("productoDescuento");
+                });
+
+            modelBuilder.Entity("JoyeriaPremiun.Entidades.Usuario", b =>
+                {
+                    b.Navigation("Favoritos");
                 });
 #pragma warning restore 612, 618
         }

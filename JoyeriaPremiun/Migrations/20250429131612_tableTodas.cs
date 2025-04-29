@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace JoyeriaPremiun.Migrations
 {
     /// <inheritdoc />
-    public partial class _4 : Migration
+    public partial class tableTodas : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -36,7 +36,7 @@ namespace JoyeriaPremiun.Migrations
                     Categoria = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Precio = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    Cantidad = table.Column<int>(type: "int", nullable: false),
+                    descuento = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     Stock = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -45,10 +45,11 @@ namespace JoyeriaPremiun.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Usuarios",
+                name: "UsuarioS",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Correo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Telefono = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -57,7 +58,7 @@ namespace JoyeriaPremiun.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Usuarios", x => x.Id);
+                    table.PrimaryKey("PK_UsuarioS", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -108,6 +109,52 @@ namespace JoyeriaPremiun.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ProductoDescuentos",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductoId = table.Column<int>(type: "int", nullable: false),
+                    Descuento = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductoDescuentos", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_ProductoDescuentos_Productos_ProductoId",
+                        column: x => x.ProductoId,
+                        principalTable: "Productos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "favoritos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductoId = table.Column<int>(type: "int", nullable: false),
+                    UsuarioId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_favoritos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_favoritos_Productos_ProductoId",
+                        column: x => x.ProductoId,
+                        principalTable: "Productos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_favoritos_UsuarioS_UsuarioId",
+                        column: x => x.UsuarioId,
+                        principalTable: "UsuarioS",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_compraProductos_CompraId",
                 table: "compraProductos",
@@ -119,9 +166,25 @@ namespace JoyeriaPremiun.Migrations
                 column: "ProductoId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_favoritos_ProductoId",
+                table: "favoritos",
+                column: "ProductoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_favoritos_UsuarioId",
+                table: "favoritos",
+                column: "UsuarioId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_imagens_ProductoId",
                 table: "imagens",
                 column: "ProductoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductoDescuentos_ProductoId",
+                table: "ProductoDescuentos",
+                column: "ProductoId",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -131,13 +194,19 @@ namespace JoyeriaPremiun.Migrations
                 name: "compraProductos");
 
             migrationBuilder.DropTable(
+                name: "favoritos");
+
+            migrationBuilder.DropTable(
                 name: "imagens");
 
             migrationBuilder.DropTable(
-                name: "Usuarios");
+                name: "ProductoDescuentos");
 
             migrationBuilder.DropTable(
                 name: "compras");
+
+            migrationBuilder.DropTable(
+                name: "UsuarioS");
 
             migrationBuilder.DropTable(
                 name: "Productos");

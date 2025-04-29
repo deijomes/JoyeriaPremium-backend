@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JoyeriaPremiun.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250428195752_productos5")]
-    partial class productos5
+    [Migration("20250429131612_tableTodas")]
+    partial class tableTodas
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -77,6 +77,29 @@ namespace JoyeriaPremiun.Migrations
                     b.HasIndex("ProductoId");
 
                     b.ToTable("compraProductos");
+                });
+
+            modelBuilder.Entity("JoyeriaPremiun.Entidades.FavoritoProducto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ProductoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductoId");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("favoritos");
                 });
 
             modelBuilder.Entity("JoyeriaPremiun.Entidades.ImagenProducto", b =>
@@ -161,9 +184,11 @@ namespace JoyeriaPremiun.Migrations
 
             modelBuilder.Entity("JoyeriaPremiun.Entidades.Usuario", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Correo")
                         .IsRequired()
@@ -185,7 +210,7 @@ namespace JoyeriaPremiun.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Usuarios");
+                    b.ToTable("UsuarioS");
                 });
 
             modelBuilder.Entity("JoyeriaPremiun.Entidades.CompraProductoS", b =>
@@ -203,6 +228,25 @@ namespace JoyeriaPremiun.Migrations
                     b.Navigation("Compra");
 
                     b.Navigation("Producto");
+                });
+
+            modelBuilder.Entity("JoyeriaPremiun.Entidades.FavoritoProducto", b =>
+                {
+                    b.HasOne("JoyeriaPremiun.Entidades.Producto", "Productos")
+                        .WithMany("Favoritos")
+                        .HasForeignKey("ProductoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JoyeriaPremiun.Entidades.Usuario", "Usuario")
+                        .WithMany("Favoritos")
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Productos");
+
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("JoyeriaPremiun.Entidades.ImagenProducto", b =>
@@ -236,9 +280,16 @@ namespace JoyeriaPremiun.Migrations
                 {
                     b.Navigation("CompraProductos");
 
+                    b.Navigation("Favoritos");
+
                     b.Navigation("imagenProductos");
 
                     b.Navigation("productoDescuento");
+                });
+
+            modelBuilder.Entity("JoyeriaPremiun.Entidades.Usuario", b =>
+                {
+                    b.Navigation("Favoritos");
                 });
 #pragma warning restore 612, 618
         }

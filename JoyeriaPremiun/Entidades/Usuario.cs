@@ -5,7 +5,7 @@ namespace JoyeriaPremiun.Entidades
 {
     public class Usuario
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public int  Id { get; set; } 
         [Required]
         public required string Nombre { get; set; } 
         [EmailAddress]
@@ -15,7 +15,8 @@ namespace JoyeriaPremiun.Entidades
         public required string Password { get; set; }
         public bool Estado { get; set; } = true;
 
-        
+        public List<FavoritoProducto> Favoritos { get; set; } = new();
+
 
     }
 }

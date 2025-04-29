@@ -28,6 +28,8 @@ namespace JoyeriaPremiun.Entidades
                 return Precio * (1 - descuento / 100m);
             }
         }
+
+        public List<FavoritoProducto> Favoritos { get; set; } = new();
     }
 
 }

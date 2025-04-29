@@ -20,13 +20,15 @@ namespace JoyeriaPremiun.utilidades
 
             CreateMap<productoDescuentoCreacionDTO, ProductoDescuento>();
 
-            CreateMap<compraCreacionDTO, CompraProductoS>();
-
-            
+            CreateMap<favoritosProductoDTO, FavoritoProducto>();
+            CreateMap<FavoritoProducto, favoritosDTO>();
+               
 
 
             CreateMap<usuarioCreacionDTO, Usuario>();
             CreateMap<Usuario, usuarioDTO>();
+
+            CreateMap<compraCreacionDTO, CompraProductoS>();
 
             CreateMap<compraCreacionDTO, Producto>();
             CreateMap<compraCreacionDTO, Compra>()
