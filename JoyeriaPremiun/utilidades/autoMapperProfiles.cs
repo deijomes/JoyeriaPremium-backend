@@ -21,8 +21,13 @@ namespace JoyeriaPremiun.utilidades
             CreateMap<productoDescuentoCreacionDTO, ProductoDescuento>();
 
             CreateMap<favoritosProductoDTO, FavoritoProducto>();
-            CreateMap<FavoritoProducto, favoritosDTO>();
-               
+
+            CreateMap<FavoritoProducto, favoritosDTO>()
+            .ForMember(dest => dest.UsuarioId, opt => opt.MapFrom(src => src.UsuarioId))
+            .ForMember(dest => dest.favoritos, opt => opt.MapFrom(src => src.Productos));
+
+
+
 
 
             CreateMap<usuarioCreacionDTO, Usuario>();

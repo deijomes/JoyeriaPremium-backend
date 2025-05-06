@@ -29,7 +29,7 @@ namespace JoyeriaPremiun.Entidades
             }
         }
 
-        public List<FavoritoProducto> Favoritos { get; set; } = new();
+        public List<FavoritoProducto>? Favoritos { get; set; } = new();
     }
 
 }

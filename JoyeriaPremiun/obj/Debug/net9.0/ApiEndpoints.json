@@ -255,7 +255,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "JoyeriaPremiun.DTOS.favoritosDTO",
+        "Type": "System.Collections.Generic.List\u00601[[JoyeriaPremiun.DTOS.favoritosDTO, JoyeriaPremiun, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

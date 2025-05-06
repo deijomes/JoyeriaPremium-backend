@@ -19,32 +19,32 @@ namespace JoyeriaPremiun.Controllers
             this.context = context;
             this.mapper = mapper;
         }
-
         [HttpGet("{usuarioId}")]
-        public async Task<ActionResult<favoritosDTO>> Get(int usuarioId)
+        public async Task<ActionResult<List<favoritosDTO>>> Get(int usuarioId)
         {
             var productos = await context.favoritos
-                .Include(f => f.Productos)
-                .Where(f => f.UsuarioId == usuarioId)
-                .Select(f => f.Productos)
-                .ToListAsync();
+                            .Include(f => f.Productos)
+                            .ThenInclude(p => p.imagenProductos)
+                            .Where(f => f.UsuarioId == usuarioId)
+                            .ToListAsync();
 
             if (!productos.Any())
                 return NotFound("No tiene productos favoritos.");
 
-            var productosDTO = mapper.Map<List<productoDTO>>(productos);
-
-             
+            var productosDTO = productos
+                .Select(f => mapper.Map<productoDTO>(f.Productos))
+                .ToList();
 
             var resultado = new favoritosDTO
             {
-                
                 UsuarioId = usuarioId,
                 favoritos = productosDTO
             };
 
             return Ok(resultado);
+
         }
+
 
 
 
