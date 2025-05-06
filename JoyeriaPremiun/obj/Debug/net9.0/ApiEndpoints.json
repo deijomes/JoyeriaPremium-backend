@@ -316,5 +316,21 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JoyeriaPremiun.Controllers.VentaController",
+    "Method": "Post",
+    "RelativePath": "api/ventas",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ventaCreacionDTO",
+        "Type": "JoyeriaPremiun.DTOS.ventaCreacionDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

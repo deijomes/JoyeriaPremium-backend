@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("JoyeriaPremiun")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+584ac0b1ac6616384e30fb24c90ce50d7c8a8ffc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5df38bdd464935094b96456193c709ac1cdb0cb4")]
 [assembly: System.Reflection.AssemblyProductAttribute("JoyeriaPremiun")]
 [assembly: System.Reflection.AssemblyTitleAttribute("JoyeriaPremiun")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
