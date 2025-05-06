@@ -18,7 +18,8 @@ namespace JoyeriaPremiun.Entidades
 
         public List<ImagenProducto>? imagenProductos { get; set; } = new List<ImagenProducto>();
         public List<CompraProductoS>? CompraProductos { get; set; } = new List<CompraProductoS>();
-       
+        public List<VentaProducto>? ventas { get; set; } = new List<VentaProducto>();
+
         public ProductoDescuento? productoDescuento { get; set; }
         [NotMapped]
         public decimal PrecioDeVenta

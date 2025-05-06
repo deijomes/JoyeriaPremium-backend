@@ -37,6 +37,10 @@ namespace JoyeriaPremiun.Datos
            .Property(p => p.Descuento)
            .HasPrecision(18, 2);
 
+            modelBuilder.Entity<Venta>()
+           .Property(p => p.total)
+           .HasPrecision(18, 2);
+
         }
         public DbSet<CompraProductoS> compraProductos { get; set; }
         public DbSet<Producto> Productos { get; set; }
@@ -45,6 +49,8 @@ namespace JoyeriaPremiun.Datos
         public DbSet<Compra> compras { get; set; }
         public DbSet<ProductoDescuento> ProductoDescuentos { get;  set; }
         public DbSet<FavoritoProducto> favoritos { get; set; }
+        public DbSet<Venta> ventas { get; set; }
+        public DbSet<VentaProducto> ventaProductos { get; set; }
 
 
 
