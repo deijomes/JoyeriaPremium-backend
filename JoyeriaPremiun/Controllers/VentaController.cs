@@ -20,6 +20,24 @@ namespace JoyeriaPremiun.Controllers
             this.mapper = mapper;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ventaDTO>>> Get()
+        {
+            var venta = await context.ventas
+                       .Include(x => x.VentaProductos)
+                       .ThenInclude(cp => cp.Producto)
+                       .Include(x => x.usuario) // Suponiendo que Venta tiene una propiedad Usuario
+                       .ToListAsync();
+
+
+            var ventadto = mapper.Map<List<ventaDTO>>(venta);
+
+
+            return ventadto;
+
+        }
+
+
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] ventaCreacionDTO ventaCreacionDTO)
         {
@@ -56,7 +74,7 @@ namespace JoyeriaPremiun.Controllers
                 
                 producto.Stock -= ventasProduct.Cantidad;
 
-                // Crear un nuevo objeto VentaProducto y asignar los datos correspondientes
+               
                 var ventaProducto = new VentaProducto
                 {
                     ProductoId = ventasProduct.ProductoId,
@@ -64,14 +82,14 @@ namespace JoyeriaPremiun.Controllers
                     Producto = producto 
                 };
 
-                // Agregar el VentaProducto a la lista de productos de la venta
+                
                 venta.VentaProductos.Add(ventaProducto);
             }
 
-            // Agregar la venta a la base de datos
+           
             context.ventas.Add(venta);
 
-            // Guardar los cambios en la base de datos
+          
             await context.SaveChangesAsync();
 
             return Ok();

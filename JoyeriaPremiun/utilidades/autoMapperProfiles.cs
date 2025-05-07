@@ -12,6 +12,8 @@ namespace JoyeriaPremiun.utilidades
             CreateMap<Producto, productoDTO>()
              .ForMember(dest => dest.PrecioDeVenta, opt => opt.MapFrom(src => src.PrecioDeVenta));
 
+           
+
             CreateMap<imagenCreacionDTO, ImagenProducto>();
             CreateMap<productoCreacionDTO, Producto>();
 
@@ -51,8 +53,22 @@ namespace JoyeriaPremiun.utilidades
 
             CreateMap<ventaCreacionDTO, Venta>();
 
+            CreateMap<VentaProducto, ventaProductDTO>()
+           .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Producto.Id))
+           .ForMember(dest => dest.PrecioDeVenta, opt => opt.MapFrom(src => src.Producto.PrecioDeVenta))
+           .ForMember(dest => dest.Nombre, opt => opt.MapFrom(src => src.Producto.Nombre))
+           .ForMember(dest => dest.Cantidad, opt => opt.MapFrom(src => src.Cantidad));
+
+            CreateMap<Venta, ventaDTO>();
+
+
+
+
+
+
+
         }
-    
+
 
     }
     
