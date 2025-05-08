@@ -11,7 +11,7 @@ namespace JoyeriaPremiun.DTOS
         public DateTime FechaDeCompra { get; set; } = DateTime.Now;
 
         public List<ventaProductDTO>? VentaProductos { get; set; } = new List<ventaProductDTO>();
-        public Usuario? usuario { get; set; }
+        public usuarioDTO? Usuario { get; set; }
 
         public decimal total { get; set; }
     }

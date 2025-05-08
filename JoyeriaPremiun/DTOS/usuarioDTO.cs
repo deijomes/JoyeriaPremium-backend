@@ -4,7 +4,7 @@ namespace JoyeriaPremiun.DTOS
 {
     public class usuarioDTO
     {
-        public Guid Id { get; set; } 
+        public int Id { get; set; } 
         [Required]
         public required string Nombre { get; set; }
         [EmailAddress]
