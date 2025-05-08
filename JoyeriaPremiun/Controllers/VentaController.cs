@@ -37,6 +37,26 @@ namespace JoyeriaPremiun.Controllers
 
         }
 
+        [HttpGet("{usuarioId}")]
+        public async Task<ActionResult<IEnumerable<ventaDTO>>> GetVentasPorUsuario(int usuarioId)
+        {
+            var ventas = await context.ventas
+                .Where(v => v.usuarioId == usuarioId)
+                .Include(v => v.VentaProductos)
+                    .ThenInclude(vp => vp.Producto)
+                .Include(v => v.usuario)
+                .ToListAsync();
+
+            if (!ventas.Any())
+                return NotFound();
+
+            var ventasDTO = mapper.Map<List<ventaDTO>>(ventas);
+
+            return Ok(ventasDTO);
+        }
+
+
+
 
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] ventaCreacionDTO ventaCreacionDTO)
@@ -94,6 +114,28 @@ namespace JoyeriaPremiun.Controllers
 
             return Ok();
         }
+
+        [HttpDelete("{ventaId}")]
+        public async Task<IActionResult> DeleteVenta(int ventaId)
+        {
+            var venta = await context.ventas
+                .Include(v => v.VentaProductos)
+                .FirstOrDefaultAsync(v => v.Id == ventaId);
+
+            if (venta == null)
+                return NotFound("Venta no encontrada.");
+
+            // Primero se eliminan los productos relacionados
+            context.ventaProductos.RemoveRange(venta.VentaProductos);
+
+            // Luego se elimina la venta
+            context.ventas.Remove(venta);
+
+            await context.SaveChangesAsync();
+
+            return Ok("Venta eliminada correctamente.");
+        }
+
 
     }
 }

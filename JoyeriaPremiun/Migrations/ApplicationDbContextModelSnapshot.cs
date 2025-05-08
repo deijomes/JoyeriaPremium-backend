@@ -322,7 +322,7 @@ namespace JoyeriaPremiun.Migrations
             modelBuilder.Entity("JoyeriaPremiun.Entidades.Venta", b =>
                 {
                     b.HasOne("JoyeriaPremiun.Entidades.Usuario", "usuario")
-                        .WithMany()
+                        .WithMany("productosComprado")
                         .HasForeignKey("usuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -370,6 +370,8 @@ namespace JoyeriaPremiun.Migrations
             modelBuilder.Entity("JoyeriaPremiun.Entidades.Usuario", b =>
                 {
                     b.Navigation("Favoritos");
+
+                    b.Navigation("productosComprado");
                 });
 
             modelBuilder.Entity("JoyeriaPremiun.Entidades.Venta", b =>
