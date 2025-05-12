@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JoyeriaPremiun.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250506161342_ventas")]
-    partial class ventas
+    [Migration("20250512151858_tables")]
+    partial class tables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -77,6 +77,36 @@ namespace JoyeriaPremiun.Migrations
                     b.HasIndex("ProductoId");
 
                     b.ToTable("compraProductos");
+                });
+
+            modelBuilder.Entity("JoyeriaPremiun.Entidades.Direccion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Calle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Carrera")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ciudad")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumeroTelefono")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("direcciones");
                 });
 
             modelBuilder.Entity("JoyeriaPremiun.Entidades.FavoritoProducto", b =>
@@ -281,6 +311,17 @@ namespace JoyeriaPremiun.Migrations
                     b.Navigation("Producto");
                 });
 
+            modelBuilder.Entity("JoyeriaPremiun.Entidades.Direccion", b =>
+                {
+                    b.HasOne("JoyeriaPremiun.Entidades.Usuario", "Usuario")
+                        .WithMany("direcciones")
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Usuario");
+                });
+
             modelBuilder.Entity("JoyeriaPremiun.Entidades.FavoritoProducto", b =>
                 {
                     b.HasOne("JoyeriaPremiun.Entidades.Producto", "Productos")
@@ -325,7 +366,7 @@ namespace JoyeriaPremiun.Migrations
             modelBuilder.Entity("JoyeriaPremiun.Entidades.Venta", b =>
                 {
                     b.HasOne("JoyeriaPremiun.Entidades.Usuario", "usuario")
-                        .WithMany()
+                        .WithMany("productosComprado")
                         .HasForeignKey("usuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -373,6 +414,10 @@ namespace JoyeriaPremiun.Migrations
             modelBuilder.Entity("JoyeriaPremiun.Entidades.Usuario", b =>
                 {
                     b.Navigation("Favoritos");
+
+                    b.Navigation("direcciones");
+
+                    b.Navigation("productosComprado");
                 });
 
             modelBuilder.Entity("JoyeriaPremiun.Entidades.Venta", b =>

@@ -125,10 +125,10 @@ namespace JoyeriaPremiun.Controllers
             if (venta == null)
                 return NotFound("Venta no encontrada.");
 
-            // Primero se eliminan los productos relacionados
+            
             context.ventaProductos.RemoveRange(venta.VentaProductos);
 
-            // Luego se elimina la venta
+          
             context.ventas.Remove(venta);
 
             await context.SaveChangesAsync();

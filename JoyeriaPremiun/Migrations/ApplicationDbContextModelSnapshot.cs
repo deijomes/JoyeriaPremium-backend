@@ -76,6 +76,36 @@ namespace JoyeriaPremiun.Migrations
                     b.ToTable("compraProductos");
                 });
 
+            modelBuilder.Entity("JoyeriaPremiun.Entidades.Direccion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Calle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Carrera")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ciudad")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumeroTelefono")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("direcciones");
+                });
+
             modelBuilder.Entity("JoyeriaPremiun.Entidades.FavoritoProducto", b =>
                 {
                     b.Property<int>("Id")
@@ -278,6 +308,17 @@ namespace JoyeriaPremiun.Migrations
                     b.Navigation("Producto");
                 });
 
+            modelBuilder.Entity("JoyeriaPremiun.Entidades.Direccion", b =>
+                {
+                    b.HasOne("JoyeriaPremiun.Entidades.Usuario", "Usuario")
+                        .WithMany("direcciones")
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Usuario");
+                });
+
             modelBuilder.Entity("JoyeriaPremiun.Entidades.FavoritoProducto", b =>
                 {
                     b.HasOne("JoyeriaPremiun.Entidades.Producto", "Productos")
@@ -370,6 +411,8 @@ namespace JoyeriaPremiun.Migrations
             modelBuilder.Entity("JoyeriaPremiun.Entidades.Usuario", b =>
                 {
                     b.Navigation("Favoritos");
+
+                    b.Navigation("direcciones");
 
                     b.Navigation("productosComprado");
                 });

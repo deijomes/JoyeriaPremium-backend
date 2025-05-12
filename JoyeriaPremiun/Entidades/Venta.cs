@@ -14,6 +14,7 @@ namespace JoyeriaPremiun.Entidades
             public Usuario? usuario { get; set; }
 
             public decimal total { get; set; }
+           
 
     }
 }

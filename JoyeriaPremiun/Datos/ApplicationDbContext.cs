@@ -41,6 +41,7 @@ namespace JoyeriaPremiun.Datos
            .Property(p => p.total)
            .HasPrecision(18, 2);
 
+          
         }
         public DbSet<CompraProductoS> compraProductos { get; set; }
         public DbSet<Producto> Productos { get; set; }
@@ -51,6 +52,13 @@ namespace JoyeriaPremiun.Datos
         public DbSet<FavoritoProducto> favoritos { get; set; }
         public DbSet<Venta> ventas { get; set; }
         public DbSet<VentaProducto> ventaProductos { get; set; }
+        public DbSet<Direccion> direcciones { get; set; }
+
+
+
+
+
+
 
 
 

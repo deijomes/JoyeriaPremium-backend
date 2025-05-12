@@ -17,6 +17,7 @@ namespace JoyeriaPremiun.Entidades
 
         public List<FavoritoProducto> Favoritos { get; set; } = new();
         public List<Venta> productosComprado { get; set; } = new();
+        public List<Direccion> direcciones { get; set; } = new();
 
 
     }
