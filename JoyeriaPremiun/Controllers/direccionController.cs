@@ -82,6 +82,20 @@ namespace JoyeriaPremiun.Controllers
 
             return NoContent();
         }
+        [HttpDelete("{Id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var direccion = await context.direcciones.FirstOrDefaultAsync(c => c.Id == id);
+
+            if (direccion == null)
+            {
+                return NotFound($"Direccion  no encontrada.");
+            }
+
+            context.direcciones.Remove(direccion);
+            await context.SaveChangesAsync();
+            return NoContent();
+        }
 
 
     }

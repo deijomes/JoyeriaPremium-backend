@@ -141,6 +141,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "JoyeriaPremiun.Controllers.direccionController",
+    "Method": "Delete",
+    "RelativePath": "api/direccion/{Id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "JoyeriaPremiun.Controllers.ProductoController",
     "Method": "Get",
     "RelativePath": "api/producto",
