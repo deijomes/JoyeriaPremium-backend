@@ -21,7 +21,7 @@ namespace JoyeriaPremiun.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<IEnumerable<Direccion>>> Get([FromRoute] int id)
+        public async Task<ActionResult<IEnumerable<direccionDTO>>> Get([FromRoute] int id)
         {
             var direccionUsuario = await context.direcciones
                 .Include(x => x.Usuario)
@@ -33,7 +33,9 @@ namespace JoyeriaPremiun.Controllers
                 return NotFound("No se encontraron direcciones para este usuario.");
             }
 
-            return direccionUsuario;
+            var direccionDTO = mapper.Map<List<direccionDTO>>(direccionUsuario);
+
+            return direccionDTO;
         }
 
 

@@ -63,7 +63,9 @@ namespace JoyeriaPremiun.utilidades
              .ForMember(dest => dest.Usuario, opt => opt.MapFrom(src => src.usuario));
 
             CreateMap<direccionCreacionDTO, Direccion>();
-             
+            CreateMap<Direccion, direccionDTO>();
+                
+
 
 
 
