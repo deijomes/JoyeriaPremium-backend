@@ -157,6 +157,38 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "JoyeriaPremiun.Controllers.pagosController",
+    "Method": "Capturar",
+    "RelativePath": "api/pagos/capturar-orden",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "JoyeriaPremiun.Settings.CapturaRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JoyeriaPremiun.Controllers.pagosController",
+    "Method": "CrearOrden",
+    "RelativePath": "api/pagos/crear-orden",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "monto",
+        "Type": "System.Decimal",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "JoyeriaPremiun.Controllers.ProductoController",
     "Method": "Get",
     "RelativePath": "api/producto",

@@ -14,5 +14,7 @@ namespace JoyeriaPremiun.Entidades
         public string? NumeroTelefono { get; set; }
 
         public Usuario? Usuario { get; set; }
+        public int PedidoId { get; set; }
+        public Pedido? Pedido { get; set; }
     }
 }
