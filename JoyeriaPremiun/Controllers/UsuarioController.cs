@@ -22,11 +22,13 @@ namespace JoyeriaPremiun.Controllers
     {
         private readonly UserManager<Usuario> userManager;
         private readonly IConfiguration configuration;
+        private readonly SignInManager<Usuario> signInManager;
 
-        public UsuarioController(UserManager<Usuario> userManager, IConfiguration configuration)
+        public UsuarioController(UserManager<Usuario> userManager, IConfiguration configuration, SignInManager<Usuario> signInManager)
         {
             this.userManager = userManager;
             this.configuration = configuration;
+            this.signInManager = signInManager;
         }
 
         
@@ -60,6 +62,37 @@ namespace JoyeriaPremiun.Controllers
             
             }
 
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<respuestaAutenticacionDTO>> login(loguinCreacionDTO loguinCreacionDTO)
+        {
+
+            var usuario = await userManager.FindByEmailAsync(loguinCreacionDTO.Correo);
+
+            if (usuario is null)
+            {
+                return retonarLoguinIncorrecto();
+
+            }
+
+            var resultado = await signInManager.CheckPasswordSignInAsync(
+                usuario, loguinCreacionDTO.Password, lockoutOnFailure: false);
+
+            if (resultado.Succeeded)
+            {
+                return await ConstruirTokenLoguin(loguinCreacionDTO);
+            }else
+            {
+                return retonarLoguinIncorrecto();
+            }
+
+        }
+
+        private ActionResult retonarLoguinIncorrecto()
+        {
+            ModelState.AddModelError(string.Empty, "loguin incorrecto");
+             return ValidationProblem();
         }
 
 
@@ -102,7 +135,44 @@ namespace JoyeriaPremiun.Controllers
             };
         }
 
+        private async Task<respuestaAutenticacionDTO> ConstruirTokenLoguin(loguinCreacionDTO loguinCreacionDTO)
+        {
+            var claims = new List<Claim>
+            {
 
+               new Claim("email", loguinCreacionDTO.Correo),
+
+            };
+
+            var usuario = await userManager.FindByEmailAsync(loguinCreacionDTO.Correo);
+
+
+            var claimsDB = await userManager.GetClaimsAsync(usuario!);
+            claims.AddRange(claimsDB);
+
+
+            var llave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["llavejwt"]!));
+
+            var credenciales = new SigningCredentials(llave, SecurityAlgorithms.HmacSha256);
+
+            var expiracion = DateTime.UtcNow.AddHours(1);
+
+
+            var tokenDeSeguridad = new JwtSecurityToken(issuer: null, audience: null, claims: claims,
+                expires: expiracion, signingCredentials: credenciales);
+
+
+            var token = new JwtSecurityTokenHandler().WriteToken(tokenDeSeguridad);
+
+
+            return new respuestaAutenticacionDTO
+            {
+                token = token,
+                expiracion = expiracion,
+                userID = usuario.Id,
+                usuario = usuario.UserName!
+            };
+        }
 
 
 

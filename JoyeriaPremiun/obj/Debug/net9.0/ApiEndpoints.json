@@ -241,6 +241,32 @@
   },
   {
     "ContainingType": "JoyeriaPremiun.Controllers.UsuarioController",
+    "Method": "login",
+    "RelativePath": "api/usuarios/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "loguinCreacionDTO",
+        "Type": "JoyeriaPremiun.DTOS.loguinCreacionDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "JoyeriaPremiun.DTOS.respuestaAutenticacionDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "JoyeriaPremiun.Controllers.UsuarioController",
     "Method": "Registrar",
     "RelativePath": "api/usuarios/registrar",
     "HttpMethod": "POST",
