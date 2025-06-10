@@ -24,12 +24,17 @@ namespace JoyeriaPremiun.Controllers
         private readonly UserManager<Usuario> userManager;
         private readonly IConfiguration configuration;
         private readonly SignInManager<Usuario> signInManager;
+        private readonly ApplicationDbContext dbContext;
+        private readonly IMapper mapper;
 
-        public UsuarioController(UserManager<Usuario> userManager, IConfiguration configuration, SignInManager<Usuario> signInManager)
+        public UsuarioController(UserManager<Usuario> userManager, IConfiguration configuration, SignInManager<Usuario> signInManager, 
+            ApplicationDbContext dbContext, IMapper mapper )
         {
             this.userManager = userManager;
             this.configuration = configuration;
             this.signInManager = signInManager;
+            this.dbContext = dbContext;
+            this.mapper = mapper;
         }
 
         
@@ -90,6 +95,15 @@ namespace JoyeriaPremiun.Controllers
 
         }
 
+        [HttpGet("listUsuarios")]
+        public async Task<ActionResult<IEnumerable<usuarioDTO>>> get()
+        {
+            var usuarios = await dbContext.Users.ToListAsync();
+            var usuariosDTOS = mapper.Map<List<usuarioDTO>>(usuarios);
+
+            return usuariosDTOS;
+        }
+
         [HttpPost("-Admin")]
         [Authorize(Policy ="esAdmin")]
         public async Task<ActionResult> Admin( editarClaimDTO editarClaimDTO)
@@ -147,10 +161,8 @@ namespace JoyeriaPremiun.Controllers
             var  adminUser = "user";
             if (esAdmin) {
 
-
                adminUser = "esAdmin";
 
-            
             }
 
 
