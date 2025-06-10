@@ -142,7 +142,18 @@ namespace JoyeriaPremiun.Controllers
             var claimsDB = await userManager.GetClaimsAsync(usuario!);
             claims.AddRange(claimsDB);
 
-           
+            var esAdmin = (await userManager.GetClaimsAsync(usuario!)).Any(c => c.Type == "esAdmin" && c.Value == "true");
+
+            var  adminUser = "user";
+            if (esAdmin) {
+
+
+               adminUser = "esAdmin";
+
+            
+            }
+
+
             var llave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["llavejwt"]!));
 
             var credenciales = new SigningCredentials(llave, SecurityAlgorithms.HmacSha256);
@@ -162,7 +173,9 @@ namespace JoyeriaPremiun.Controllers
                 token = token,
                 expiracion = expiracion,
                 userID = usuario.Id,
-                usuario = usuario.UserName!
+                usuario = usuario.UserName!,
+                role = adminUser,
+                
             };
         }
 
@@ -176,6 +189,13 @@ namespace JoyeriaPremiun.Controllers
             };
 
             var usuario = await userManager.FindByEmailAsync(loguinCreacionDTO.Correo);
+            var esAdmin = (await userManager.GetClaimsAsync(usuario!)).Any(c => c.Type == "esAdmin" && c.Value == "true");
+
+            var adminUser = "user";
+            if (esAdmin)
+            {
+                adminUser = "esAdmin";
+            }
 
 
             var claimsDB = await userManager.GetClaimsAsync(usuario!);
@@ -201,7 +221,8 @@ namespace JoyeriaPremiun.Controllers
                 token = token,
                 expiracion = expiracion,
                 userID = usuario.Id,
-                usuario = usuario.UserName!
+                usuario = usuario.UserName!,
+                role = adminUser,
             };
         }
 

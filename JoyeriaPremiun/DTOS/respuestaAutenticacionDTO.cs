@@ -8,5 +8,6 @@ namespace JoyeriaPremiun.DTOS
         public DateTime expiracion { get; set; }
         public  required string userID { get; set; }
         public  required string usuario { get; set; }
+        public required string role { get; set; } 
     }
 }
