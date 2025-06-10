@@ -1,9 +1,10 @@
 ﻿using JoyeriaPremiun.Entidades;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace JoyeriaPremiun.Datos
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<Usuario>
     {
         
 
@@ -41,12 +42,15 @@ namespace JoyeriaPremiun.Datos
            .Property(p => p.total)
            .HasPrecision(18, 2);
 
-          
+            modelBuilder.Entity<Usuario>()
+            .Property(u => u.Estado)
+            .HasDefaultValue(true);
+
         }
         public DbSet<CompraProductoS> compraProductos { get; set; }
         public DbSet<Producto> Productos { get; set; }
         public DbSet<ImagenProducto> imagens { get; set; }
-        public DbSet<Usuario> UsuarioS { get; set; }
+       
         public DbSet<Compra> compras { get; set; }
         public DbSet<ProductoDescuento> ProductoDescuentos { get;  set; }
         public DbSet<FavoritoProducto> favoritos { get; set; }

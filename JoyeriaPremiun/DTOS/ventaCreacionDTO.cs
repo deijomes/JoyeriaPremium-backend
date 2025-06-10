@@ -7,7 +7,7 @@ namespace JoyeriaPremiun.DTOS
     {
 
         [Required]
-        public required int usuarioId { get; set; }
+        public required string usuarioId { get; set; }
         public List<ventaProductoDTO>? productos { get; set; }
 
 

@@ -20,25 +20,25 @@ namespace JoyeriaPremiun.Controllers
             this.mapper = mapper;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<ventaDTO>>> Get()
-        {
-            var venta = await context.ventas
-                       .Include(x => x.VentaProductos)
-                       .ThenInclude(cp => cp.Producto)
-                       .Include(x => x.usuario) // Suponiendo que Venta tiene una propiedad Usuario
-                       .ToListAsync();
+         [HttpGet]
+         public async Task<ActionResult<IEnumerable<ventaDTO>>> Get()
+         {
+             var venta = await context.ventas
+                        .Include(x => x.VentaProductos)
+                        .ThenInclude(cp => cp.Producto)
+                        .Include(x => x.usuario) // Suponiendo que Venta tiene una propiedad Usuario
+                        .ToListAsync();
 
 
-            var ventadto = mapper.Map<List<ventaDTO>>(venta);
+             var ventadto = mapper.Map<List<ventaDTO>>(venta);
 
 
-            return ventadto;
+             return ventadto;
 
-        }
+         }
 
-        [HttpGet("{usuarioId}")]
-        public async Task<ActionResult<IEnumerable<ventaDTO>>> GetVentasPorUsuario(int usuarioId)
+        [HttpGet("usuario/{usuarioId}")]
+        public async Task<ActionResult<IEnumerable<ventaDTO>>> GetVentasPorUsuario(string usuarioId)
         {
             var ventas = await context.ventas
                 .Where(v => v.usuarioId == usuarioId)
@@ -47,13 +47,15 @@ namespace JoyeriaPremiun.Controllers
                 .Include(v => v.usuario)
                 .ToListAsync();
 
-            if (!ventas.Any())
-                return NotFound();
+            if (ventas == null || ventas.Count == 0)
+            {
+                return NotFound($"No se encontraron ventas para el usuario con ID: {usuarioId}");
+            }
 
             var ventasDTO = mapper.Map<List<ventaDTO>>(ventas);
-
             return Ok(ventasDTO);
         }
+
 
 
 
@@ -69,9 +71,10 @@ namespace JoyeriaPremiun.Controllers
 
            
             var venta = mapper.Map<Venta>(ventaCreacionDTO);
-            venta.VentaProductos = new List<VentaProducto>(); 
+            venta.VentaProductos = new List<VentaProducto>();
 
-           
+            decimal totalVenta = 0;
+
             foreach (var ventasProduct in ventaCreacionDTO.productos)
             {
                 
@@ -104,9 +107,14 @@ namespace JoyeriaPremiun.Controllers
 
                 
                 venta.VentaProductos.Add(ventaProducto);
+
+                
+                totalVenta += producto.PrecioDeVenta * ventasProduct.Cantidad;
+
             }
 
-           
+            venta.total = totalVenta;
+
             context.ventas.Add(venta);
 
           

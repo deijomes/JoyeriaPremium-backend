@@ -3,7 +3,7 @@
     public class favoritosDTO
     {
         
-        public int UsuarioId { get; set; }
+        public string? UsuarioId { get; set; }
 
         public List<productoDTO>? favoritos { get; set; }
     }

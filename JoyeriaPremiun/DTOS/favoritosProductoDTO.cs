@@ -6,7 +6,7 @@ namespace JoyeriaPremiun.DTOS
     {
        
         public int ProductoId { get; set; }
-        public int UsuarioId { get; set; }
+        public string? UsuarioId { get; set; }
         
     }
 }

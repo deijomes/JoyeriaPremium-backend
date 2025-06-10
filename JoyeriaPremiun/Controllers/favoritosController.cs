@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace JoyeriaPremiun.Controllers
-{
+{ /*
     [ApiController]
     [Route("api/ProductosFavoritos")]
     public class favoritosController : ControllerBase
@@ -20,7 +20,7 @@ namespace JoyeriaPremiun.Controllers
             this.mapper = mapper;
         }
         [HttpGet("{usuarioId}")]
-        public async Task<ActionResult<List<favoritosDTO>>> Get(int usuarioId)
+        public async Task<ActionResult<List<favoritosDTO>>> Get(string usuarioId)
         {
             var productos = await context.favoritos
                             .Include(f => f.Productos)
@@ -94,5 +94,5 @@ namespace JoyeriaPremiun.Controllers
 
 
 
-    }
+    }*/
 }

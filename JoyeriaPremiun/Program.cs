@@ -1,9 +1,13 @@
 using JoyeriaPremiun.Datos;
+using JoyeriaPremiun.Entidades;
 using JoyeriaPremiun.Settings;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +23,40 @@ Opciones.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles)
 
 builder.Services.AddDbContext<ApplicationDbContext>(opciones =>
 opciones.UseSqlServer("name=defaultconnection"));
+
+
+
+
+
+builder.Services.AddIdentityCore<Usuario>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.AddScoped<UserManager<Usuario>>();
+builder.Services.AddScoped<SignInManager<Usuario>>();
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddAuthentication().AddJwtBearer(opciones =>
+{
+    opciones.MapInboundClaims = false;
+
+    opciones.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["llaveJwt"]!)),
+        ClockSkew = TimeSpan.Zero,
+    };
+});
+
+
+
+
+
+
+
 
 builder.Services.Configure<PayPalSettings>(builder.Configuration.GetSection("PayPal"));
 

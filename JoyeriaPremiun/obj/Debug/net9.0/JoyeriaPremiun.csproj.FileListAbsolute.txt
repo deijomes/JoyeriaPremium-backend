@@ -492,3 +492,10 @@ C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\obj\Debug
 C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\obj\Debug\net9.0\JoyeriaPremiun.pdb
 C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\obj\Debug\net9.0\JoyeriaPremiun.genruntimeconfig.cache
 C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\obj\Debug\net9.0\ref\JoyeriaPremiun.dll
+C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\bin\Debug\net9.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\bin\Debug\net9.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\bin\Debug\net9.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\bin\Debug\net9.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\bin\Debug\net9.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\bin\Debug\net9.0\System.Text.Json.dll

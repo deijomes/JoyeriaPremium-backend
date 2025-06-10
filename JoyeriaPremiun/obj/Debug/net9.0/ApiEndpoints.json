@@ -73,90 +73,6 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "JoyeriaPremiun.Controllers.direccionController",
-    "Method": "Get",
-    "RelativePath": "api/direccion/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[JoyeriaPremiun.DTOS.direccionDTO, JoyeriaPremiun, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "JoyeriaPremiun.Controllers.direccionController",
-    "Method": "Post",
-    "RelativePath": "api/direccion/{id}",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "direccionCreacionDTO",
-        "Type": "JoyeriaPremiun.DTOS.direccionCreacionDTO",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "JoyeriaPremiun.Controllers.direccionController",
-    "Method": "Put",
-    "RelativePath": "api/direccion/{id}",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "direccionCreacionDTO",
-        "Type": "JoyeriaPremiun.DTOS.direccionCreacionDTO",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "JoyeriaPremiun.Controllers.direccionController",
-    "Method": "Delete",
-    "RelativePath": "api/direccion/{Id}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "JoyeriaPremiun.Controllers.pagosController",
     "Method": "Capturar",
     "RelativePath": "api/pagos/capturar-orden",
@@ -324,103 +240,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "JoyeriaPremiun.Controllers.favoritosController",
-    "Method": "post",
-    "RelativePath": "api/ProductosFavoritos",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "favoritosProducto",
-        "Type": "JoyeriaPremiun.DTOS.favoritosProductoDTO",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "JoyeriaPremiun.Controllers.favoritosController",
-    "Method": "Remove",
-    "RelativePath": "api/ProductosFavoritos/{productoId}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "productoId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "JoyeriaPremiun.Controllers.favoritosController",
-    "Method": "Get",
-    "RelativePath": "api/ProductosFavoritos/{usuarioId}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "usuarioId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.List\u00601[[JoyeriaPremiun.DTOS.favoritosDTO, JoyeriaPremiun, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "JoyeriaPremiun.Controllers.UsuarioController",
-    "Method": "get",
-    "RelativePath": "api/usuario",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[JoyeriaPremiun.DTOS.usuarioDTO, JoyeriaPremiun, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "JoyeriaPremiun.Controllers.UsuarioController",
-    "Method": "post",
-    "RelativePath": "api/usuario/loguin",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "loguinDTO",
-        "Type": "JoyeriaPremiun.DTOS.LoguinDTO",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "JoyeriaPremiun.Controllers.UsuarioController",
     "Method": "Registrar",
-    "RelativePath": "api/usuario/registrar",
+    "RelativePath": "api/usuarios/registrar",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -431,7 +253,17 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "JoyeriaPremiun.DTOS.respuestaAutenticacionDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "JoyeriaPremiun.Controllers.VentaController",
@@ -471,15 +303,31 @@
   },
   {
     "ContainingType": "JoyeriaPremiun.Controllers.VentaController",
+    "Method": "DeleteVenta",
+    "RelativePath": "api/ventas/{ventaId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ventaId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JoyeriaPremiun.Controllers.VentaController",
     "Method": "GetVentasPorUsuario",
-    "RelativePath": "api/ventas/{usuarioId}",
+    "RelativePath": "api/ventas/usuario/{usuarioId}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "usuarioId",
-        "Type": "System.Int32",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],
@@ -494,21 +342,5 @@
         "StatusCode": 200
       }
     ]
-  },
-  {
-    "ContainingType": "JoyeriaPremiun.Controllers.VentaController",
-    "Method": "DeleteVenta",
-    "RelativePath": "api/ventas/{ventaId}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "ventaId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
   }
 ]

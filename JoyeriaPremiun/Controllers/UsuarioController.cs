@@ -2,80 +2,111 @@
 using JoyeriaPremiun.Datos;
 using JoyeriaPremiun.DTOS;
 using JoyeriaPremiun.Entidades;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.Collections;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 
 
 namespace JoyeriaPremiun.Controllers
 {
-    [ApiController]
-    [Route("api/usuario")]
+   [ApiController]
+    [Route("api/usuarios")]
     public class UsuarioController : ControllerBase
     {
-        private readonly ApplicationDbContext context;
-        private readonly IMapper mapper;
+        private readonly UserManager<Usuario> userManager;
+        private readonly IConfiguration configuration;
+
+        public UsuarioController(UserManager<Usuario> userManager, IConfiguration configuration)
+        {
+            this.userManager = userManager;
+            this.configuration = configuration;
+        }
+
         
 
-        public UsuarioController(ApplicationDbContext context, IMapper mapper)
-        {
-            this.context = context;
-            this.mapper = mapper;
-        }
-
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<usuarioDTO>>> get ()
-        {
-            var usuarios = await context.UsuarioS.Where(x=> x.Estado == true).ToListAsync();
-
-            var usuarioDto = mapper.Map<List<usuarioDTO>>(usuarios);
-
-            return usuarioDto;
-        }
-
         [HttpPost("registrar")]
-        public async Task<ActionResult> Registrar([FromBody] usuarioCreacionDTO usuarioCreacionDTO)
+        public async Task<ActionResult<respuestaAutenticacionDTO>> Registrar (usuarioCreacionDTO usuarioCreacionDTO)
         {
-           
-            if (await context.UsuarioS.AnyAsync(x => x.Correo == usuarioCreacionDTO.Correo))
+            var usuario = new Usuario
             {
-                return BadRequest("El usuario ya existe.");
+                UserName = usuarioCreacionDTO.Nombre,
+                Email = usuarioCreacionDTO.Correo,
+                PhoneNumber = usuarioCreacionDTO.Telefono,
+
+            };
+
+            var resultado = await userManager.CreateAsync(usuario, usuarioCreacionDTO.Password);
+
+            if (resultado.Succeeded)
+            {
+
+                var respuestAutenticacion = await ConstruirToken(usuarioCreacionDTO);
+                return respuestAutenticacion;
+
+            }
+            else
+            { foreach (var error in resultado.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+                return ValidationProblem();
+            
             }
 
-           
-            var usuario = mapper.Map<Usuario>(usuarioCreacionDTO);
-
-            
-            usuario.Password = BCrypt.Net.BCrypt.HashPassword(usuarioCreacionDTO.Password);
-           
-
-            context.UsuarioS.Add(usuario);
-            await context.SaveChangesAsync();
-
-            return Ok("Usuario registrado con éxito.");
         }
 
-        [HttpPost("loguin")]
-        public async Task<ActionResult> post([FromBody] LoguinDTO loguinDTO)
+
+        private async Task<respuestaAutenticacionDTO> ConstruirToken(usuarioCreacionDTO  usuarioCreacionDTO)
         {
-            
-            var usuario = await context.UsuarioS.FirstOrDefaultAsync(x => x.Correo == loguinDTO.Correo);
-            
-            if (usuario == null)
+            var claims = new List<Claim>
             {
-                return Unauthorized();  
-            }
+             
+               new Claim("email", usuarioCreacionDTO.Correo),
+               
+            };
 
-            bool passwordValida = BCrypt.Net.BCrypt.Verify(loguinDTO.Password, usuario.Password);
+            var usuario = await userManager.FindByEmailAsync(usuarioCreacionDTO.Correo);
 
-            if (!passwordValida)
+
+            var claimsDB = await userManager.GetClaimsAsync(usuario!);
+            claims.AddRange(claimsDB);
+
+           
+            var llave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["llavejwt"]!));
+
+            var credenciales = new SigningCredentials(llave, SecurityAlgorithms.HmacSha256);
+
+            var expiracion = DateTime.UtcNow.AddHours(1);
+
+           
+            var tokenDeSeguridad = new JwtSecurityToken(issuer: null, audience: null, claims: claims,
+                expires: expiracion, signingCredentials: credenciales);
+
+
+            var token = new JwtSecurityTokenHandler().WriteToken(tokenDeSeguridad);
+           
+
+            return new respuestaAutenticacionDTO
             {
-                return Unauthorized(); 
-            }
+                token = token,
+                expiracion = expiracion,
+                userID = usuario.Id,
+                usuario = usuario.UserName!
+            };
+        }
 
-            return Ok("Usuario autenticado con éxito.");
 
-        } 
+
+
+
     }
+
+
 }

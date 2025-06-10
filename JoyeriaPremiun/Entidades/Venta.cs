@@ -7,7 +7,7 @@ namespace JoyeriaPremiun.Entidades
       
             public int Id { get; set; }
             [Required]
-            public required int usuarioId { get; set; }
+            public required string usuarioId { get; set; }
             public DateTime FechaDeCompra { get; set; } = DateTime.Now;
 
             public List<VentaProducto>? VentaProductos { get; set; } = new List<VentaProducto>();

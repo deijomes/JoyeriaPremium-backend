@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JoyeriaPremiun.Controllers
 {
-    [ApiController]
+   /* [ApiController]
     [Route("api/direccion")]
     public class direccionController:ControllerBase
     {
@@ -20,8 +20,8 @@ namespace JoyeriaPremiun.Controllers
             this.mapper = mapper;
         }
 
-        [HttpGet("{id:int}")]
-        public async Task<ActionResult<IEnumerable<direccionDTO>>> Get([FromRoute] int id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IEnumerable<direccionDTO>>> Get([FromRoute] string id)
         {
             var direccionUsuario = await context.direcciones
                 .Include(x => x.Usuario)
@@ -40,7 +40,7 @@ namespace JoyeriaPremiun.Controllers
 
 
         [HttpPost("{id:int}")]
-        public async Task<ActionResult> Post([FromRoute] int id, [FromBody] direccionCreacionDTO direccionCreacionDTO)
+        public async Task<ActionResult> Post([FromRoute] string id, [FromBody] direccionCreacionDTO direccionCreacionDTO)
         {
             var existeUsuario = await context.UsuarioS.AnyAsync(x => x.Id == id);
             if (!existeUsuario)
@@ -98,5 +98,5 @@ namespace JoyeriaPremiun.Controllers
         }
 
 
-    }
+    }*/
 }
