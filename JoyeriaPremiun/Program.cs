@@ -55,7 +55,11 @@ builder.Services.AddAuthentication().AddJwtBearer(opciones =>
 
 
 
+builder.Services.AddAuthorization(opciones =>
+{
+    opciones.AddPolicy("esAdmin", politica => politica.RequireClaim("esAdmin"));
 
+});
 
 
 builder.Services.Configure<PayPalSettings>(builder.Configuration.GetSection("PayPal"));

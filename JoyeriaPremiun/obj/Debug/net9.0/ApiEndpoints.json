@@ -241,6 +241,22 @@
   },
   {
     "ContainingType": "JoyeriaPremiun.Controllers.UsuarioController",
+    "Method": "Admin",
+    "RelativePath": "api/usuarios/-Admin",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "editarClaimDTO",
+        "Type": "JoyeriaPremiun.DTOS.editarClaimDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JoyeriaPremiun.Controllers.UsuarioController",
     "Method": "login",
     "RelativePath": "api/usuarios/login",
     "HttpMethod": "POST",
@@ -290,6 +306,22 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "JoyeriaPremiun.Controllers.UsuarioController",
+    "Method": "removeAdmin",
+    "RelativePath": "api/usuarios/remove-Admin",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "editarClaimDTO",
+        "Type": "JoyeriaPremiun.DTOS.editarClaimDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "JoyeriaPremiun.Controllers.VentaController",

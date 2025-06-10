@@ -2,6 +2,7 @@
 using JoyeriaPremiun.Datos;
 using JoyeriaPremiun.DTOS;
 using JoyeriaPremiun.Entidades;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -87,6 +88,36 @@ namespace JoyeriaPremiun.Controllers
                 return retonarLoguinIncorrecto();
             }
 
+        }
+
+        [HttpPost("-Admin")]
+        [Authorize(Policy ="esAdmin")]
+        public async Task<ActionResult> Admin( editarClaimDTO editarClaimDTO)
+        {
+            var usuario = await userManager.FindByEmailAsync(editarClaimDTO.Email);
+
+            if (usuario is null)
+            {
+                return NotFound();
+            }
+
+            await userManager.AddClaimAsync(usuario, new Claim("esAdmin", "true"));
+            return NoContent();
+        }
+
+        [HttpPost("remove-Admin")]
+        [Authorize(Policy = "esAdmin")]
+        public async Task<ActionResult> removeAdmin(editarClaimDTO editarClaimDTO)
+        {
+            var usuario = await userManager.FindByEmailAsync(editarClaimDTO.Email);
+
+            if (usuario is null)
+            {
+                return NotFound();
+            }
+
+            await userManager.RemoveClaimAsync(usuario, new Claim("esAdmin", "true"));
+            return NoContent();
         }
 
         private ActionResult retonarLoguinIncorrecto()
