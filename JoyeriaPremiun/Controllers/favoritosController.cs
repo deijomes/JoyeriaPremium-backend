@@ -2,22 +2,25 @@
 using JoyeriaPremiun.Datos;
 using JoyeriaPremiun.DTOS;
 using JoyeriaPremiun.Entidades;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace JoyeriaPremiun.Controllers
-{ /*
+{ 
     [ApiController]
     [Route("api/ProductosFavoritos")]
     public class favoritosController : ControllerBase
     {
         private readonly ApplicationDbContext context;
         private readonly IMapper mapper;
+        private readonly UserManager<Usuario> userManager;
 
-        public favoritosController(ApplicationDbContext context, IMapper mapper)
+        public favoritosController(ApplicationDbContext context, IMapper mapper, UserManager<Usuario> userManager)
         {
             this.context = context;
             this.mapper = mapper;
+            this.userManager = userManager;
         }
         [HttpGet("{usuarioId}")]
         public async Task<ActionResult<List<favoritosDTO>>> Get(string usuarioId)
@@ -54,7 +57,7 @@ namespace JoyeriaPremiun.Controllers
         public async Task<ActionResult> post ([FromBody] favoritosProductoDTO favoritosProducto)
         {
             if (!await context.Productos.AnyAsync(p => p.Id == favoritosProducto.ProductoId) ||
-             !await context.UsuarioS.AnyAsync(u => u.Id == favoritosProducto.UsuarioId))
+             !await context.Users.AnyAsync(u => u.Id == favoritosProducto.UsuarioId))
             {
                 return NotFound("Producto o usuario no existente.");
             }
@@ -94,5 +97,5 @@ namespace JoyeriaPremiun.Controllers
 
 
 
-    }*/
+    }
 }

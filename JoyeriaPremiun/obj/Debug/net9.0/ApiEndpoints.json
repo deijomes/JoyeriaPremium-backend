@@ -240,6 +240,64 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "JoyeriaPremiun.Controllers.favoritosController",
+    "Method": "post",
+    "RelativePath": "api/ProductosFavoritos",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "favoritosProducto",
+        "Type": "JoyeriaPremiun.DTOS.favoritosProductoDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JoyeriaPremiun.Controllers.favoritosController",
+    "Method": "Remove",
+    "RelativePath": "api/ProductosFavoritos/{productoId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "productoId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JoyeriaPremiun.Controllers.favoritosController",
+    "Method": "Get",
+    "RelativePath": "api/ProductosFavoritos/{usuarioId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "usuarioId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[JoyeriaPremiun.DTOS.favoritosDTO, JoyeriaPremiun, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "JoyeriaPremiun.Controllers.UsuarioController",
     "Method": "Admin",
     "RelativePath": "api/usuarios/-Admin",
