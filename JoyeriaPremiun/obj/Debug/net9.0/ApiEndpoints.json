@@ -258,7 +258,7 @@
   {
     "ContainingType": "JoyeriaPremiun.Controllers.favoritosController",
     "Method": "Remove",
-    "RelativePath": "api/ProductosFavoritos/{productoId}",
+    "RelativePath": "api/ProductosFavoritos/{productoId}/usuario/{usuarioId}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -266,6 +266,11 @@
       {
         "Name": "productoId",
         "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "usuarioId",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],

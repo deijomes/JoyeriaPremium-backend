@@ -76,23 +76,23 @@ namespace JoyeriaPremiun.Controllers
 
         }
 
-        [HttpDelete("{productoId:int}")]
-        public async Task<ActionResult> Remove([FromRoute] int productoId)
+        [HttpDelete("{productoId:int}/usuario/{usuarioId}")]
+        public async Task<ActionResult> Remove([FromRoute] int productoId, [FromRoute] string usuarioId)
         {
             var favorito = await context.favoritos
-                .FirstOrDefaultAsync(x => x.ProductoId == productoId);
+                .FirstOrDefaultAsync(x => x.ProductoId == productoId && x.UsuarioId == usuarioId);
 
             if (favorito == null)
             {
-                return NotFound();
+                return NotFound("Favorito no encontrado para este usuario.");
             }
 
-            context.favoritos.Remove(favorito); 
-
+            context.favoritos.Remove(favorito);
             await context.SaveChangesAsync();
 
             return NoContent(); 
         }
+
 
 
 
