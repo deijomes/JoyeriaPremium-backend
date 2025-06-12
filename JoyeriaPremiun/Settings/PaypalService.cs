@@ -73,6 +73,18 @@ namespace JoyeriaPremiun.Settings
 
         public async Task<string> CreateOrder(CreateOrderRequest request)
         {
+            
+            var venta = await context.ventas.FindAsync(request.VentaId);
+
+            if (venta is null)
+            {
+                throw new Exception("La venta no existe.");
+            }
+
+            if (venta.Estado == "Pagado")
+            {
+                throw new Exception("La venta ya fue pagada. No se puede generar una nueva orden.");
+            }
 
             var accessToken = await GetAccessTokenAsync();
             _httpClient.DefaultRequestHeaders.Authorization =
@@ -90,8 +102,6 @@ namespace JoyeriaPremiun.Settings
                     currency_code = "USD",
                     value = request.Amount.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)
                 }
-
-
             }
         },
                 application_context = new
@@ -99,7 +109,7 @@ namespace JoyeriaPremiun.Settings
                     brand_name = "JoyeriaPremium",
                     landing_page = "LOGIN",
                     user_action = "PAY_NOW",
-                    return_url = request.ReturnUrl,   
+                    return_url = request.ReturnUrl,
                     cancel_url = request.CancelUrl
                 }
             };
@@ -112,13 +122,12 @@ namespace JoyeriaPremiun.Settings
             var result = await response.Content.ReadAsStringAsync();
             var paypalResponse = JsonSerializer.Deserialize<PaypalOrderResponse>(result);
 
-            var venta = await context.ventas.FindAsync(request.VentaId);
-            if (venta is not null)
-            {
-                venta.PaypalOrderId = paypalResponse.Id;
-                await context.SaveChangesAsync();
-            }
+            
+            venta.PaypalOrderId = paypalResponse.Id;
+            await context.SaveChangesAsync();
+
             return result;
         }
+
     }
 }
