@@ -42,7 +42,7 @@ namespace JoyeriaPremiun.Settings
             return json.RootElement.GetProperty("access_token").GetString()!;
         }
 
-        public async Task<string> CaptureOrder(string orderId)
+        public async Task<string> CaptureOrder(CapturaRequest request)
         {
             var token = await GetAccessTokenAsync();
 
@@ -52,7 +52,7 @@ namespace JoyeriaPremiun.Settings
             // PayPal acepta un body vacío como {}
             var postData = new StringContent("{}", Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync($"{_settings.BaseUrl}/v2/checkout/orders/{orderId}/capture", postData);
+            var response = await _httpClient.PostAsync($"{_settings.BaseUrl}/v2/checkout/orders/{request.OrderId}/capture", postData);
             var jsonContent = await response.Content.ReadAsStringAsync();
 
             if (!response.IsSuccessStatusCode)
@@ -60,7 +60,7 @@ namespace JoyeriaPremiun.Settings
                 throw new Exception($"Error al capturar la orden: {response.StatusCode} - {jsonContent}");
             }
             var captureResponse = JsonSerializer.Deserialize<PaypalOrderResponse>(jsonContent);
-            var venta = await context.ventas.FirstOrDefaultAsync(v => v.PaypalOrderId == orderId);
+            var venta = await context.ventas.FirstOrDefaultAsync(v => v.PaypalOrderId == request.OrderId);
             if (venta is not null)
             {
                 venta.Estado = "Pagado"; // Asegúrate de tener esta propiedad en la clase Venta

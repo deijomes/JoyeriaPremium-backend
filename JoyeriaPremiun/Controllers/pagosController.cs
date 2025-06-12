@@ -35,8 +35,17 @@ namespace JoyeriaPremiun.Controllers
         [HttpPost("capturar-orden")]
         public async Task<IActionResult> Capturar([FromBody] CapturaRequest request)
         {
-            var resultado = await payPalService.CaptureOrder(request.OrderId);
-            return Ok(resultado);
+            try
+            {
+                var resultado = await payPalService.CaptureOrder(request);
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest("Por Favor confirme su orden"+ ex.Message);
+
+            }
         }
 
         

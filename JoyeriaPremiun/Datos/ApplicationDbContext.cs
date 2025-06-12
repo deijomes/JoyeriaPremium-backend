@@ -46,6 +46,18 @@ namespace JoyeriaPremiun.Datos
             .Property(u => u.Estado)
             .HasDefaultValue(true);
 
+            modelBuilder.Entity<Pedido>()
+               .HasOne(p => p.Venta)
+               .WithMany()
+               .HasForeignKey(p => p.VentaId)
+               .OnDelete(DeleteBehavior.Restrict); // Evita cascada
+
+            modelBuilder.Entity<Pedido>()
+                .HasOne(p => p.Direccion)
+                .WithMany()
+                .HasForeignKey(p => p.DireccionId)
+                .OnDelete(DeleteBehavior.Restrict); 
+
         }
         public DbSet<CompraProductoS> compraProductos { get; set; }
         public DbSet<Producto> Productos { get; set; }
@@ -57,6 +69,7 @@ namespace JoyeriaPremiun.Datos
         public DbSet<Venta> ventas { get; set; }
         public DbSet<VentaProducto> ventaProductos { get; set; }
         public DbSet<Direccion> direcciones { get; set; }
+        public DbSet<Pedido> Pedidos { get; set; }
 
 
 
