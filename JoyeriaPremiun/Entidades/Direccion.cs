@@ -11,10 +11,9 @@ namespace JoyeriaPremiun.Entidades
         public string? Ciudad { get; set; }
         public string? Calle { get; set; }
         public string? Carrera { get; set; }  
-        public string? NumeroTelefono { get; set; }
-
+      
         public Usuario? Usuario { get; set; }
-        public int PedidoId { get; set; }
+        
        
     }
 }

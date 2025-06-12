@@ -1,13 +1,15 @@
 ﻿using AutoMapper;
+using Azure.Core;
 using JoyeriaPremiun.Datos;
 using JoyeriaPremiun.DTOS;
 using JoyeriaPremiun.Entidades;
+using JoyeriaPremiun.Migrations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace JoyeriaPremiun.Controllers
 {
-   /* [ApiController]
+    [ApiController]
     [Route("api/direccion")]
     public class direccionController:ControllerBase
     {
@@ -38,29 +40,27 @@ namespace JoyeriaPremiun.Controllers
             return direccionDTO;
         }
 
-
-        [HttpPost("{id:int}")]
-        public async Task<ActionResult> Post([FromRoute] string id, [FromBody] direccionCreacionDTO direccionCreacionDTO)
+        [HttpPost]
+        public async Task<IActionResult> CrearDireccion([FromBody] direccionCreacionDTO  direccionCreacionDTO)
         {
-            var existeUsuario = await context.UsuarioS.AnyAsync(x => x.Id == id);
-            if (!existeUsuario)
+            var usuario = await context.Users.FindAsync(direccionCreacionDTO.UsuarioId);
+            if (usuario == null)
             {
-                return BadRequest("El usuario no existe.");
+                return NotFound("El usuario especificado no existe.");
             }
 
-            if (direccionCreacionDTO == null)
-            {
-                return BadRequest("No se enviaron datos.");
-            }
+            var direccionDTO = mapper.Map<Direccion>(direccionCreacionDTO);
 
-            var direccion = mapper.Map<Direccion>(direccionCreacionDTO);
-            direccion.UsuarioId = id;
-
-            context.direcciones.Add(direccion);
+            context.direcciones.Add(direccionDTO);
             await context.SaveChangesAsync();
 
             return Ok();
+
         }
+
+
+
+
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Put([FromRoute] int id, [FromBody] direccionCreacionDTO direccionCreacionDTO)
         {
@@ -75,13 +75,19 @@ namespace JoyeriaPremiun.Controllers
                 return BadRequest("No se enviaron datos.");
             }
 
-         
-            mapper.Map(direccionCreacionDTO, direccionExistente);
+
+            var direccionDTO = mapper.Map<Direccion>(direccionExistente);
+            direccionExistente.Ciudad = direccionCreacionDTO.Ciudad;
+            direccionExistente.Carrera = direccionCreacionDTO.Carrera;
+            direccionExistente.Calle = direccionCreacionDTO.Calle;
+
 
             await context.SaveChangesAsync();
 
             return NoContent();
         }
+
+
         [HttpDelete("{Id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -98,5 +104,5 @@ namespace JoyeriaPremiun.Controllers
         }
 
 
-    }*/
+    }
 }
