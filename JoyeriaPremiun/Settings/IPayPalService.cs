@@ -2,7 +2,7 @@
 {
     public interface IPayPalService
     {
-        Task<string> CreateOrder(decimal amount);
+        Task<string> CreateOrder(CreateOrderRequest request);
         Task<string> CaptureOrder(string orderId);
     }
 }

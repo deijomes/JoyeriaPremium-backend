@@ -61,7 +61,7 @@ namespace JoyeriaPremiun.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] ventaCreacionDTO ventaCreacionDTO)
+        public async Task<ActionResult<totalVentaDTO>> Post([FromBody] ventaCreacionDTO ventaCreacionDTO)
         {
             
             if (ventaCreacionDTO.productos == null || !ventaCreacionDTO.productos.Any())
@@ -113,14 +113,15 @@ namespace JoyeriaPremiun.Controllers
 
             }
 
+           
+
             venta.total = totalVenta;
 
             context.ventas.Add(venta);
-
-          
             await context.SaveChangesAsync();
+            var total = mapper.Map<totalVentaDTO>(venta);
 
-            return Ok();
+            return  total;
         }
 
         [HttpDelete("{ventaId}")]

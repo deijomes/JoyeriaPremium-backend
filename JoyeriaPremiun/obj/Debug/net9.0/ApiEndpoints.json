@@ -97,8 +97,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "monto",
-        "Type": "System.Decimal",
+        "Name": "request",
+        "Type": "JoyeriaPremiun.Settings.CreateOrderRequest",
         "IsRequired": true
       }
     ],
@@ -440,7 +440,17 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "JoyeriaPremiun.DTOS.totalVentaDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "JoyeriaPremiun.Controllers.VentaController",

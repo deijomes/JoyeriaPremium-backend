@@ -15,9 +15,9 @@ namespace JoyeriaPremiun.Controllers
         }
 
         [HttpPost("crear-orden")]
-        public async Task<IActionResult> CrearOrden([FromBody] decimal monto)
+        public async Task<IActionResult> CrearOrden([FromBody] CreateOrderRequest request)
         {
-            var result = await payPalService.CreateOrder(monto);
+            var result = await payPalService.CreateOrder(request);
             return Ok(result);
         }
 

@@ -69,7 +69,8 @@ builder.Services.AddScoped<IPayPalService>(provider =>
 {
     var httpClientFactory = provider.GetRequiredService<IHttpClientFactory>();
     var settings = provider.GetRequiredService<IOptions<PayPalSettings>>();
-    return new PaypalService(httpClientFactory, settings);
+    var Context = provider.GetRequiredService<ApplicationDbContext>();
+    return new PaypalService(httpClientFactory, settings, Context);
 });
 
 

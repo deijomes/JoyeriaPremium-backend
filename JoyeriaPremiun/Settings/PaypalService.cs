@@ -3,6 +3,8 @@ using Microsoft.Extensions.Options;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
+using JoyeriaPremiun.Datos;
 
 namespace JoyeriaPremiun.Settings
 {
@@ -10,12 +12,13 @@ namespace JoyeriaPremiun.Settings
     {
         private readonly HttpClient _httpClient;
         private readonly PayPalSettings _settings;
+        private readonly ApplicationDbContext context;
 
-        public PaypalService(IHttpClientFactory factory, IOptions<PayPalSettings> settings)
+        public PaypalService(IHttpClientFactory factory, IOptions<PayPalSettings> settings, ApplicationDbContext context)
         {
             _httpClient = factory.CreateClient("PaypalClient");         
             _settings = settings.Value;
-
+            this.context = context;
         }
 
 
@@ -56,12 +59,19 @@ namespace JoyeriaPremiun.Settings
             {
                 throw new Exception($"Error al capturar la orden: {response.StatusCode} - {jsonContent}");
             }
-
+            var captureResponse = JsonSerializer.Deserialize<PaypalOrderResponse>(jsonContent);
+            var venta = await context.ventas.FirstOrDefaultAsync(v => v.PaypalOrderId == orderId);
+            if (venta is not null)
+            {
+                venta.Estado = "Pagado"; // Asegúrate de tener esta propiedad en la clase Venta
+                venta.FechaDeCompra = DateTime.Now;
+                await context.SaveChangesAsync();
+            }
             return jsonContent;
         }
 
 
-        public async Task<string> CreateOrder(decimal amount)
+        public async Task<string> CreateOrder(CreateOrderRequest request)
         {
 
             var accessToken = await GetAccessTokenAsync();
@@ -78,14 +88,19 @@ namespace JoyeriaPremiun.Settings
                 amount = new
                 {
                     currency_code = "USD",
-                    value = amount.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)
+                    value = request.Amount.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)
                 }
+
+
             }
         },
                 application_context = new
                 {
-                    return_url = "https://localhost:4200/pago-exitoso",   // Cambia por tu URL real
-                    cancel_url = "https://localhost:4200/pago-cancelado"
+                    brand_name = "JoyeriaPremium",
+                    landing_page = "LOGIN",
+                    user_action = "PAY_NOW",
+                    return_url = request.ReturnUrl,   
+                    cancel_url = request.CancelUrl
                 }
             };
 
@@ -95,6 +110,14 @@ namespace JoyeriaPremiun.Settings
             response.EnsureSuccessStatusCode();
 
             var result = await response.Content.ReadAsStringAsync();
+            var paypalResponse = JsonSerializer.Deserialize<PaypalOrderResponse>(result);
+
+            var venta = await context.ventas.FindAsync(request.VentaId);
+            if (venta is not null)
+            {
+                venta.PaypalOrderId = paypalResponse.Id;
+                await context.SaveChangesAsync();
+            }
             return result;
         }
     }
