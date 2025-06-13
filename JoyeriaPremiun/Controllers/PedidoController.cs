@@ -36,6 +36,39 @@ namespace JoyeriaPremiun.Controllers
             return Ok(pedidoDto);
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IEnumerable<pedidosDTO>>> Get([FromRoute] string id)
+        {
+            
+            var usuarioExiste = await context.Users.AnyAsync(u => u.Id == id);
+            if (!usuarioExiste)
+            {
+                return NotFound($"usuario no encontrado");
+            }
+
+           
+            var pedidos = await context.Pedidos
+                .Include(p => p.Venta)
+                    .ThenInclude(v => v.VentaProductos)
+                        .ThenInclude(vp => vp.Producto)
+                .Include(p => p.Venta)
+                    .ThenInclude(v => v.Usuario)
+                        .ThenInclude(u => u.direcciones)
+                .Include(p => p.Direccion)
+                .Where(p => p.Venta.Usuario.Id == id)
+                .ToListAsync();
+
+           
+            if (!pedidos.Any())
+            {
+                return NotFound($"El usuario con id '{id}' no tiene pedidos.");
+            }
+
+            var pedidosDTO = mapper.Map<List<pedidosDTO>>(pedidos);
+            return pedidosDTO;
+        }
+
+
 
     }
 }
