@@ -230,6 +230,27 @@
     ]
   },
   {
+    "ContainingType": "JoyeriaPremiun.Controllers.PedidoController",
+    "Method": "ActualizarEstado",
+    "RelativePath": "api/pedidos/{id}/estado",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "JoyeriaPremiun.DTOS.ActualizarEstadoPedidoDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "JoyeriaPremiun.Controllers.ProductoController",
     "Method": "Get",
     "RelativePath": "api/producto",

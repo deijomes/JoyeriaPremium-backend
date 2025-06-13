@@ -68,6 +68,22 @@ namespace JoyeriaPremiun.Controllers
             return pedidosDTO;
         }
 
+        [HttpPut("{id}/estado")]
+        public async Task<IActionResult> ActualizarEstado(int id, [FromBody] ActualizarEstadoPedidoDTO dto)
+        {
+            var pedido = await context.Pedidos.FindAsync(id);
+
+            if (pedido == null)
+                return NotFound(new { mensaje = "Pedido no encontrado" });
+
+           
+
+            pedido.Estado = dto.Estado;
+            await context.SaveChangesAsync();
+
+            return Ok();
+        }
+
 
 
     }
