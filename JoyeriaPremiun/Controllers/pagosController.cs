@@ -43,7 +43,7 @@ namespace JoyeriaPremiun.Controllers
             catch (Exception ex)
             {
 
-                return BadRequest("Por Favor confirme su orden"+ ex.Message);
+                return BadRequest( ex.Message);
 
             }
         }

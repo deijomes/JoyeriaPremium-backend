@@ -4,6 +4,7 @@ using JoyeriaPremiun.Datos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JoyeriaPremiun.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250613153222_pedido-ajuste")]
+    partial class pedidoajuste
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -166,7 +169,7 @@ namespace JoyeriaPremiun.Migrations
                     b.Property<DateTime>("FechaPedido")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("VentaId")
+                    b.Property<int>("VentaId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -565,7 +568,8 @@ namespace JoyeriaPremiun.Migrations
                     b.HasOne("JoyeriaPremiun.Entidades.Venta", "Venta")
                         .WithMany()
                         .HasForeignKey("VentaId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Direccion");
 

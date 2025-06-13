@@ -6,11 +6,11 @@ namespace JoyeriaPremiun.Entidades
     {
         public int Id { get; set; }
 
-        [Required]
-        public int VentaId { get; set; }
+        
+        public int? VentaId { get; set; }
 
-        [Required]
-        public int DireccionId { get; set; }
+       
+        public int? DireccionId { get; set; }
 
         public DateTime FechaPedido { get; set; } = DateTime.Now;
 

@@ -5,6 +5,8 @@ using System.Text.Json;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using JoyeriaPremiun.Datos;
+using JoyeriaPremiun.Migrations;
+using JoyeriaPremiun.Entidades;
 
 namespace JoyeriaPremiun.Settings
 {
@@ -49,7 +51,6 @@ namespace JoyeriaPremiun.Settings
             _httpClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", token);
 
-            // PayPal acepta un body vacío como {}
             var postData = new StringContent("{}", Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PostAsync($"{_settings.BaseUrl}/v2/checkout/orders/{request.OrderId}/capture", postData);
@@ -59,16 +60,41 @@ namespace JoyeriaPremiun.Settings
             {
                 throw new Exception($"Error al capturar la orden: {response.StatusCode} - {jsonContent}");
             }
+
             var captureResponse = JsonSerializer.Deserialize<PaypalOrderResponse>(jsonContent);
-            var venta = await context.ventas.FirstOrDefaultAsync(v => v.PaypalOrderId == request.OrderId);
-            if (venta is not null)
+
+            var venta = await context.ventas
+                .Include(v => v.usuario)
+                .ThenInclude(u => u.direcciones)
+                .FirstOrDefaultAsync(v => v.PaypalOrderId == request.OrderId);
+
+            if (venta is null)
+                throw new Exception("No se encontró la venta asociada a la orden de PayPal.");
+
+            if (venta.usuario == null)
+                throw new Exception("La venta no tiene un usuario asociado.");
+
+            if (venta.usuario.direcciones == null || !venta.usuario.direcciones.Any())
+                throw new Exception("El usuario no tiene direcciones registradas.");
+
+            var direccion = venta.usuario.direcciones.First();
+
+            venta.Estado = "Pagado";
+            venta.FechaDeCompra = DateTime.Now;
+            await context.SaveChangesAsync();
+
+            var nuevoPedido = new Pedido
             {
-                venta.Estado = "Pagado"; // Asegúrate de tener esta propiedad en la clase Venta
-                venta.FechaDeCompra = DateTime.Now;
-                await context.SaveChangesAsync();
-            }
+                VentaId = venta.Id,
+                DireccionId = direccion.Id
+            };
+
+            context.Pedidos.Add(nuevoPedido);
+            await context.SaveChangesAsync();
+
             return jsonContent;
         }
+
 
 
         public async Task<string> CreateOrder(CreateOrderRequest request)
