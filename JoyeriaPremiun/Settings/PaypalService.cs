@@ -46,23 +46,7 @@ namespace JoyeriaPremiun.Settings
 
         public async Task<string> CaptureOrder(CapturaRequest request)
         {
-            var token = await GetAccessTokenAsync();
-
-            _httpClient.DefaultRequestHeaders.Authorization =
-                new AuthenticationHeaderValue("Bearer", token);
-
-            var postData = new StringContent("{}", Encoding.UTF8, "application/json");
-
-            var response = await _httpClient.PostAsync($"{_settings.BaseUrl}/v2/checkout/orders/{request.OrderId}/capture", postData);
-            var jsonContent = await response.Content.ReadAsStringAsync();
-
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new Exception($"Error al capturar la orden: {response.StatusCode} - {jsonContent}");
-            }
-
-            var captureResponse = JsonSerializer.Deserialize<PaypalOrderResponse>(jsonContent);
-
+            
             var venta = await context.ventas
                 .Include(v => v.Usuario)
                 .ThenInclude(u => u.direcciones)
@@ -79,10 +63,32 @@ namespace JoyeriaPremiun.Settings
 
             var direccion = venta.Usuario.direcciones.First();
 
+            
+            var token = await GetAccessTokenAsync();
+            _httpClient.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", token);
+
+           
+            var postData = new StringContent("{}", Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync(
+                $"{_settings.BaseUrl}/v2/checkout/orders/{request.OrderId}/capture",
+                postData
+            );
+            var jsonContent = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception($"Error al capturar la orden: {response.StatusCode} - {jsonContent}");
+            }
+
+            var captureResponse = JsonSerializer.Deserialize<PaypalOrderResponse>(jsonContent);
+
+           
             venta.Estado = "Pagado";
             venta.FechaDeCompra = DateTime.Now;
             await context.SaveChangesAsync();
 
+            
             var nuevoPedido = new Pedido
             {
                 VentaId = venta.Id,
@@ -94,6 +100,7 @@ namespace JoyeriaPremiun.Settings
 
             return jsonContent;
         }
+
 
 
 
