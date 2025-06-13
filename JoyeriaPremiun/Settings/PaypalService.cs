@@ -64,20 +64,20 @@ namespace JoyeriaPremiun.Settings
             var captureResponse = JsonSerializer.Deserialize<PaypalOrderResponse>(jsonContent);
 
             var venta = await context.ventas
-                .Include(v => v.usuario)
+                .Include(v => v.Usuario)
                 .ThenInclude(u => u.direcciones)
                 .FirstOrDefaultAsync(v => v.PaypalOrderId == request.OrderId);
 
             if (venta is null)
                 throw new Exception("No se encontró la venta asociada a la orden de PayPal.");
 
-            if (venta.usuario == null)
+            if (venta.Usuario == null)
                 throw new Exception("La venta no tiene un usuario asociado.");
 
-            if (venta.usuario.direcciones == null || !venta.usuario.direcciones.Any())
+            if (venta.Usuario.direcciones == null || !venta.Usuario.direcciones.Any())
                 throw new Exception("El usuario no tiene direcciones registradas.");
 
-            var direccion = venta.usuario.direcciones.First();
+            var direccion = venta.Usuario.direcciones.First();
 
             venta.Estado = "Pagado";
             venta.FechaDeCompra = DateTime.Now;

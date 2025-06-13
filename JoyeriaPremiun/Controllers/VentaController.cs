@@ -26,7 +26,7 @@ namespace JoyeriaPremiun.Controllers
              var venta = await context.ventas
                         .Include(x => x.VentaProductos)
                         .ThenInclude(cp => cp.Producto)
-                        .Include(x => x.usuario) // Suponiendo que Venta tiene una propiedad Usuario
+                        .Include(x => x.Usuario) // Suponiendo que Venta tiene una propiedad Usuario
                         .ToListAsync();
 
 
@@ -37,14 +37,14 @@ namespace JoyeriaPremiun.Controllers
 
          }
 
-        [HttpGet("usuario/{usuarioId}")]
-        public async Task<ActionResult<IEnumerable<ventaDTO>>> GetVentasPorUsuario(string usuarioId)
+         [HttpGet("usuario/{usuarioId}")]
+       public async Task<ActionResult<IEnumerable<ventaDTO>>> GetVentasPorUsuario(string usuarioId)
         {
             var ventas = await context.ventas
-                .Where(v => v.usuarioId == usuarioId)
+                .Where(v => v.UsuarioId == usuarioId)
                 .Include(v => v.VentaProductos)
                     .ThenInclude(vp => vp.Producto)
-                .Include(v => v.usuario)
+                .Include(v => v.Usuario)
                 .ToListAsync();
 
             if (ventas == null || ventas.Count == 0)

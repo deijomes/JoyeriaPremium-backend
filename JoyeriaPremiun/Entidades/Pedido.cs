@@ -19,5 +19,6 @@ namespace JoyeriaPremiun.Entidades
         
         public Venta? Venta { get; set; }
         public Direccion? Direccion { get; set; }
+        public Usuario? Usuario { get; set; }
     }
 }

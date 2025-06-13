@@ -184,6 +184,26 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "JoyeriaPremiun.Controllers.PedidoController",
+    "Method": "Get",
+    "RelativePath": "api/pedidos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[JoyeriaPremiun.DTOS.pedidosDTO, JoyeriaPremiun, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "JoyeriaPremiun.Controllers.ProductoController",
     "Method": "Get",
     "RelativePath": "api/producto",

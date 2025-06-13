@@ -7,11 +7,11 @@ namespace JoyeriaPremiun.Entidades
       
             public int Id { get; set; }
             [Required]
-            public required string usuarioId { get; set; }
+            public required string UsuarioId { get; set; }
             public DateTime FechaDeCompra { get; set; } = DateTime.Now;
 
             public List<VentaProducto>? VentaProductos { get; set; } = new List<VentaProducto>();
-            public Usuario? usuario { get; set; }
+            public Usuario? Usuario { get; set; }
 
             public decimal total { get; set; }
 
