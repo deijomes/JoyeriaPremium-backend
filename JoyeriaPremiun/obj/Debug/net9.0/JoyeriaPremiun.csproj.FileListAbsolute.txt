@@ -504,3 +504,6 @@ C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\bin\Debug
 C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\obj\Debug\net9.0\JoyeriaPremiun.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\bin\Debug\net9.0\Azure.Storage.Blobs.dll
+C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\bin\Debug\net9.0\Azure.Storage.Common.dll
+C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\bin\Debug\net9.0\System.IO.Hashing.dll

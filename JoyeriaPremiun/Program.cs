@@ -135,6 +135,8 @@ builder.Services.AddSwaggerGen(opciones =>
 
 });
 
+builder.Services.AddTransient<IAlmacenadorArchivos, almacenadorDeArchivos>();
+
 
 
 

@@ -2,6 +2,7 @@
 using JoyeriaPremiun.Datos;
 using JoyeriaPremiun.DTOS;
 using JoyeriaPremiun.Entidades;
+using JoyeriaPremiun.Settings;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using static System.Net.Mime.MediaTypeNames;
@@ -14,11 +15,14 @@ namespace JoyeriaPremiun.Controllers
     {
         private readonly ApplicationDbContext context;
         private readonly IMapper mapper;
+        private readonly IAlmacenadorArchivos almacenadorArchivos;
+        private readonly string contenedor = "productos";
 
-        public ProductoController(ApplicationDbContext context, IMapper mapper)
+        public ProductoController(ApplicationDbContext context, IMapper mapper, IAlmacenadorArchivos almacenadorArchivos)
         {
             this.context = context;
             this.mapper = mapper;
+            this.almacenadorArchivos = almacenadorArchivos;
         }
 
 
@@ -73,8 +77,20 @@ namespace JoyeriaPremiun.Controllers
              imagenCreacionDTO.ProductoId = productoId;
              var imagen = mapper.Map<ImagenProducto>(imagenCreacionDTO);
 
+            if (imagenCreacionDTO.foto != null)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await imagenCreacionDTO.foto.CopyToAsync(memoryStream);
+                    var contenido = memoryStream.ToArray();
+                    var extension = Path.GetExtension(imagenCreacionDTO.foto.FileName);
+                    imagen.foto = await almacenadorArchivos.GuardarArchivo(contenido, extension, contenedor,
+                        imagenCreacionDTO.foto.ContentType);
+                }
+            }
 
-             context.imagens.Add(imagen);
+
+            context.imagens.Add(imagen);
              await context.SaveChangesAsync();
 
              return Ok();
