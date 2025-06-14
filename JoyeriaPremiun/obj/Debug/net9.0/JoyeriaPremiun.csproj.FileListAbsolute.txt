@@ -499,3 +499,8 @@ C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\bin\Debug
 C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\bin\Debug\net9.0\Microsoft.Extensions.Identity.Core.dll
 C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\bin\Debug\net9.0\Microsoft.Extensions.Identity.Stores.dll
 C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\bin\Debug\net9.0\System.Text.Json.dll
+C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\bin\Debug\net9.0\Microsoft.OpenApi.dll
+C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\obj\Debug\net9.0\JoyeriaPremiun.MvcApplicationPartsAssemblyInfo.cs

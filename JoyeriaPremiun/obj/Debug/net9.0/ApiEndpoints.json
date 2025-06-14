@@ -112,7 +112,8 @@
         ],
         "StatusCode": 200
       }
-    ]
+    ],
+    "Summary": "Obtener direcci\u00F3n por usuarioId"
   },
   {
     "ContainingType": "JoyeriaPremiun.Controllers.direccionController",
@@ -227,7 +228,8 @@
         ],
         "StatusCode": 200
       }
-    ]
+    ],
+    "Summary": "Obtener pedidos de UsuarioID"
   },
   {
     "ContainingType": "JoyeriaPremiun.Controllers.PedidoController",

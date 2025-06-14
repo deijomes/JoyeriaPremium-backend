@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -25,6 +26,16 @@ builder.Services.AddDbContext<ApplicationDbContext>(opciones =>
 opciones.UseSqlServer("name=defaultconnection"));
 
 
+
+
+
+builder.Services.AddCors( opciones =>
+{
+    opciones.AddDefaultPolicy(opcionesCors =>
+    {
+        opcionesCors.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+    });
+});
 
 
 
@@ -80,11 +91,61 @@ builder.Services.AddHttpClient("PaypalClient", client =>
 });
 
 
+builder.Services.AddSwaggerGen(opciones =>
+{
+    opciones.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "JoyeriaPremium API",
+        Description = "Este es un servicio web API desarrollado  para gestionar operaciones de venta y  catálogo en línea ",
+
+
+        Contact = new Microsoft.OpenApi.Models.OpenApiContact
+        {
+            Email = "deibermndoza@gmail.com",
+            Name = "Mndoza",
+            Url = new Uri("https://github.com/deijomes")
+        },
+
+    });
+
+    opciones.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Ingrese el token JWT en el campo. Ejemplo: Bearer {token}"
+    });
+
+    opciones.AddSecurityRequirement(new OpenApiSecurityRequirement
+{
+    {
+        new OpenApiSecurityScheme
+        {
+            Reference = new OpenApiReference
+            {
+                Type = ReferenceType.SecurityScheme,
+                Id = "Bearer"
+            }
+        },
+        new string[] {}
+    }
+});
+
+});
+
+
+
 
 
 var app = builder.Build();
 
 //area de meddleware
+app.UseSwagger();
+app.UseSwaggerUI();
+
+app.UseCors();
 app.MapControllers();
 
 

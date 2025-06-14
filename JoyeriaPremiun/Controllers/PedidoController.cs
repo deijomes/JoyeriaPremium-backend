@@ -37,6 +37,7 @@ namespace JoyeriaPremiun.Controllers
         }
 
         [HttpGet("{id}")]
+        [EndpointSummary("Obtener pedidos de UsuarioID")]
         public async Task<ActionResult<IEnumerable<pedidosDTO>>> Get([FromRoute] string id)
         {
             

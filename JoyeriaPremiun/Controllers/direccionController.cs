@@ -23,6 +23,7 @@ namespace JoyeriaPremiun.Controllers
         }
 
         [HttpGet("{id}")]
+        [EndpointSummary("Obtener dirección por usuarioId")]
         public async Task<ActionResult<IEnumerable<direccionDTO>>> Get([FromRoute] string id)
         {
             var direccionUsuario = await context.direcciones
