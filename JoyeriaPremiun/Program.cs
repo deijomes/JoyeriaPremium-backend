@@ -63,7 +63,11 @@ builder.Services.AddAuthentication().AddJwtBearer(opciones =>
 });
 
 
-
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.User.AllowedUserNameCharacters =
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ";
+});
 
 
 builder.Services.AddAuthorization(opciones =>
