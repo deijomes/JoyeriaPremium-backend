@@ -485,7 +485,6 @@ C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\obj\Debug
 C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\obj\Debug\net9.0\staticwebassets\msbuild.buildMultiTargeting.JoyeriaPremiun.props
 C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\obj\Debug\net9.0\staticwebassets\msbuild.buildTransitive.JoyeriaPremiun.props
 C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\obj\Debug\net9.0\staticwebassets.pack.json
-C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\obj\Debug\net9.0\JoyeriaP.3C98D6AD.Up2Date
 C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\obj\Debug\net9.0\JoyeriaPremiun.dll
 C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\obj\Debug\net9.0\refint\JoyeriaPremiun.dll
