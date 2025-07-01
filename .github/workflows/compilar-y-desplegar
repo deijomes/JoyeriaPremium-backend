@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'JoyeriaPremium/**'
+      - 'JoyeriaPremiun/**'
       - '.github/workflows/compilar-y-desplegar.yml'
 
   workflow_dispatch:
