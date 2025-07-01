@@ -18,7 +18,7 @@ jobs:
     name: Build and Test
     runs-on: ubuntu-latest
     env:
-      proyecto: JoyeriaPremium/JoyeriaPremiun.csproj
+      proyecto: JoyeriaPremiun/JoyeriaPremiun.csproj
 
     steps:
       - name: Checkout repository
