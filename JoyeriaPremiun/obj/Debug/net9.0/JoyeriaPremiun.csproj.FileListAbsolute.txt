@@ -506,3 +506,4 @@ C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\obj\Debug
 C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\bin\Debug\net9.0\Azure.Storage.Blobs.dll
 C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\bin\Debug\net9.0\Azure.Storage.Common.dll
 C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\bin\Debug\net9.0\System.IO.Hashing.dll
+C:\Users\LENOVO\Documents\GitHub\JoyeriaPremium-backend\JoyeriaPremiun\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt

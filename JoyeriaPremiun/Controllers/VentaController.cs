@@ -19,8 +19,9 @@ namespace JoyeriaPremiun.Controllers
             this.context = context;
             this.mapper = mapper;
         }
+       
 
-         [HttpGet]
+        [HttpGet]
          public async Task<ActionResult<IEnumerable<ventaDTO>>> Get()
          {
              var venta = await context.ventas

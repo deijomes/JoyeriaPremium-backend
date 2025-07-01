@@ -618,6 +618,16 @@
   },
   {
     "ContainingType": "JoyeriaPremiun.Controllers.VentaController",
+    "Method": "GetEntorno",
+    "RelativePath": "api/ventas/entorno",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JoyeriaPremiun.Controllers.VentaController",
     "Method": "GetVentasPorUsuario",
     "RelativePath": "api/ventas/usuario/{usuarioId}",
     "HttpMethod": "GET",

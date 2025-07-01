@@ -13,6 +13,7 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 //area de servcicios 
 
 builder.Services.AddAutoMapper(typeof(Program));
@@ -140,6 +141,7 @@ builder.Services.AddSwaggerGen(opciones =>
 });
 
 builder.Services.AddTransient<IAlmacenadorArchivos, almacenadorDeArchivos>();
+
 
 
 
