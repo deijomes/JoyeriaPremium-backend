@@ -18,7 +18,7 @@ jobs:
     name: Build and Test
     runs-on: ubuntu-latest
     env:
-      proyecto: JoyeriaPremium/JoyeriaPremium.csproj
+      proyecto: JoyeriaPremium/JoyeriaPremiun.csproj
 
     steps:
       - name: Checkout repository
@@ -35,11 +35,4 @@ jobs:
       - name: Build
         run: dotnet build ${{ env.proyecto }} --no-restore
 
-      - name: Publish
-        run: dotnet publish ${{ env.proyecto }} -c Release -o publish
-
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: published-app
-          path: publish
+    
