@@ -10,12 +10,14 @@ on:
 
   workflow_dispatch:
 
-env: 
+env:
   VERSION_DOTNET: '9'
+  AZURE_APP_SERVICE_NOMBRE: Jpremium
+  AZURE_APP_SERVICE_UBICACION_PAQUETE: '.'
 
 jobs:
   build:
-    name: Build and Test
+    name: Build and Publish
     runs-on: ubuntu-latest
     env:
       proyecto: JoyeriaPremiun/JoyeriaPremiun.csproj
@@ -27,7 +29,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4.3.0
         with:
-          dotnet-version: ${{ env.VERSION_DOTNET }} 
+          dotnet-version: ${{ env.VERSION_DOTNET }}
 
       - name: Restore dependencies
         run: dotnet restore ${{ env.proyecto }}
@@ -35,11 +37,33 @@ jobs:
       - name: Build
         run: dotnet build ${{ env.proyecto }} --no-restore
 
-      - name: Publish
-        run: dotnet publish ${{ env.proyecto }} -c Release -o publish
+      - name: Publicar el Web API
+        run: dotnet publish ${{ env.proyecto }} -c Release -o miapp --runtime win-x86
 
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
+      - name: Cargar artefactos
+        uses: actions/upload-artifact@v4.6.0
         with:
-          name: published-app
-          path: publish
+          path: ./miapp
+          name: build
+
+  despliegue:
+    name: Despliegue en Azure
+    permissions:
+      contents: none
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Obtener los artefactos
+        uses: actions/download-artifact@v4.1.8
+        with:
+          name: build
+
+      - name: Despliegue al Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_APP_SERVICE_NOMBRE }}
+          publish-profile: ${{ secrets.AZURE_PERFIL_PUBLICO }}
+          package: ${{ env.AZURE_APP_SERVICE_UBICACION_PAQUETE }}
+
+      
