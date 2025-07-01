@@ -4,11 +4,12 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
+
    paths:
       - 'JoyeriaPremiun/**'
      
       - '.github/workflows/compilar-y-desplegar.yml'
+   workflow_dispatch:
 
 env: 
   VERSION_DOTNET: '9'
