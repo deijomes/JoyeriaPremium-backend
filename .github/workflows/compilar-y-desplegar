@@ -1,0 +1,40 @@
+name: Build and Deploy joyeriaPremium
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+   paths:
+      - 'JoyeriaPremiun/**'
+     
+      - '.github/workflows/compilar-y-desplegar.yml'
+
+env: 
+  VERSION_DOTNET: '9'
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    env:
+      proyecto: JoyeriaPremiun/JoyeriaPremiun.csproj
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.2
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4.3.0
+        with:
+          dotnet-version: ${{ env.VERSION_DOTNET }} 
+
+      - name: Restore dependencies
+        run: dotnet restore 
+
+      - name: compilar
+        run: dotnet build --no-restore 
+
+   
+
+  
